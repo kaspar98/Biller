@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require("path");
 
 const pool  = mysql.createPool({
-    host: "mysql://b86c2dfee35cd0:2efcfe28@us-cdbr-iron-east-01.cleardb.net/heroku_56b9a13d37e5dfb",
+    host: "us-cdbr-iron-east-01.cleardb.net",
     user: "b86c2dfee35cd0",
     password: "2efcfe28",
     database: "heroku_56b9a13d37e5dfb",
