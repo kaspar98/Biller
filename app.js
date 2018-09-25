@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const session = require('express-session');
 const mysql = require("mysql");
 const passport = require('passport');
+const db = require("./db/mysql");
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -77,6 +78,8 @@ app.use('/profiil', profiilRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
 app.use('/logout', logoutRouter);
+
+db.init();
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
