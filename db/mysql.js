@@ -1,13 +1,12 @@
 const mysql = require("mysql");
 const fs = require('fs');
 const path = require("path");
-
+mysql://2efcfe28@us-cdbr-iron-east-01.cleardb.net/heroku_56b9a13d37e5dfb?reconnect=true
 const pool  = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
+    host: "mysql://b86c2dfee35cd0:2efcfe28@us-cdbr-iron-east-01.cleardb.net/heroku_56b9a13d37e5dfb",
+    user: "b86c2dfee35cd0",
+    password: "2efcfe28",
+    database: "heroku_56b9a13d37e5dfb",
     // host     : 'localhost',
     // user     : 'root',
     // password : '',
