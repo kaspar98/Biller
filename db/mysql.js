@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const pathModule = require('path');
+const fs = require('fs');
 
 const pool  = mysql.createPool({
     host: process.env.DB_HOST,
@@ -29,8 +29,12 @@ function getUserById(id, cb) {
 }
 
 function init () {
-    return readFile(pathModule.resolve(__dirname, './init.sql'), 'utf8')
-        .then(tableDef => pool.query(tableDef))
+    fs.readFile('./init.sql', 'utf8', (err, data) => {
+        if (err) {
+            return console.log(err);
+        }
+        pool.query(data);
+    })
 }
 
 module.exports = {
