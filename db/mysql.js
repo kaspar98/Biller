@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const fs = require('fs');
+const path = require("path");
 
 const pool  = mysql.createPool({
     host: process.env.DB_HOST,
@@ -29,7 +30,7 @@ function getUserById(id, cb) {
 }
 
 function init () {
-    fs.readFile('./init.sql', 'utf8', (err, data) => {
+    fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8', (err, data) => {
         if (err) {
             return console.log(err);
         }
