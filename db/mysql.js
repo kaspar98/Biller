@@ -3,18 +3,18 @@ const fs = require('fs');
 const path = require("path");
 
 const pool  = mysql.createPool({
-    host: "us-cdbr-iron-east-01.cleardb.net",
+/*    host: "us-cdbr-iron-east-01.cleardb.net",
     user: "b86c2dfee35cd0",
     password: "2efcfe28",
     database: "heroku_56b9a13d37e5dfb",
     port: 3306,
-    multipleStatements: true
-    // host     : 'localhost',
-    // user     : 'root',
-    // password : '',
-    // database: 'biller',
-    // connectionLimit : 20,
-    // multipleStatements: true
+    multipleStatements: true*/
+     host     : 'localhost',
+     user     : 'root',
+     password : '',
+     database: 'biller',
+     connectionLimit : 20,
+     multipleStatements: true
 });
 
 function addUser(firstName, lastName, email, username, password, cb) {
@@ -29,6 +29,10 @@ function getUserByEmail(email, cb) {
 
 function getUserById(id, cb) {
     pool.query("SELECT * FROM users WHERE id=?", id, cb);
+}
+
+function getUserByName(firstName, lastName, cb) {
+    pool.query("SELECT * FROM users WHERE first_name='" + firstName + "' AND last_name='" + lastName + "'", cb);
 }
 
 function init () {
@@ -46,5 +50,6 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserById,
-    init
+    init,
+    getUserByName
 };
