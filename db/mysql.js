@@ -7,11 +7,14 @@ const pool  = mysql.createPool({
     user: "b86c2dfee35cd0",
     password: "2efcfe28",
     database: "heroku_56b9a13d37e5dfb",
+    port: 3306,
+    multipleStatements: true
     // host     : 'localhost',
     // user     : 'root',
     // password : '',
-    // database : 'Biller',
-    // connectionLimit : 20
+    // database: 'biller',
+    // connectionLimit : 20,
+    // multipleStatements: true
 });
 
 function addUser(firstName, lastName, email, username, password, cb) {
@@ -29,12 +32,14 @@ function getUserById(id, cb) {
 }
 
 function init () {
-    fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8', (err, data) => {
-        if (err) {
-            return console.log(err);
+    data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
+    pool.query(data, (error) => {
+        if (error){
+            console.log(error.message)
+            throw error;
         }
-        pool.query(data);
-    })
+        console.log("Table created")
+    });
 }
 
 module.exports = {
@@ -42,4 +47,4 @@ module.exports = {
     getUserByEmail,
     getUserById,
     init
-}
+};
