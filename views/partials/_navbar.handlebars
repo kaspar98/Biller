@@ -5,26 +5,26 @@ https://getbootstrap.com/docs/4.1/components/navbar/#
 <nav class="navbar">
     <div class="container">
         <div class="navbar-items">
-            <div class="navbar-left">
+        <div class="navbar-left">
+            {{#if user}}
                 <a class="navbar-logo" href="/">Biller</a>
                 <a href="/">Avaleht</a>
                 <a href="/Bilanss">Bilanss</a>
             </div>
 
-            <div></div>
+                <div></div>
 
             <div class="navbar-right">
-                <form class="search">
+                <form method="post" action="/add" class="search">
                     <input type="search" placeholder="Search" aria-label="Sisesta nimi">
                     <button type="submit">Otsi</button>
                 </form>
-                {{#if user}}
-                    <a class="nav-link log" href="/logout">LogOut</a>
-                {{else}}
-                    <a class="nav-link log" href="/login">LogIn</a>
-                    <a class="nav-link sign" href="/signup">SignUp</a>
-                {{/if}}
-            </div>
+                <a class="nav-link log" href="/logout">LogOut</a>
+            {{else}}
+                <a class="nav-link log" href="/login">LogIn</a>
+                <a class="nav-link sign" href="/signup">SignUp</a>
+            {{/if}}
+        </div>
         </div>
     </div>
 </nav>

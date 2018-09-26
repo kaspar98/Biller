@@ -21,21 +21,7 @@ const loginRouter = require('./routes/login');
 const profiilRouter = require('./routes/profiil');
 const signUpRouter = require('./routes/signup');
 const logoutRouter = require('./routes/logout');
-
-
-// // Andmebaasiga ühenduse loomine
-// const db = mysql.createConnection({
-//     host     : 'localhost',
-//     user     : 'root',
-//     password : '',
-//     database : 'Biller'
-// });
-// db.connect((err) => {
-//     if(err){
-//         throw err;
-//     }
-//     console.log("Database Connected")
-// });
+const addRouter = require('./routes/add');
 
 // Handlebars Middleware
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -80,6 +66,7 @@ app.use('/profiil', profiilRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
 app.use('/logout', logoutRouter);
+app.use('/add', addRouter);
 
 db.init();
 

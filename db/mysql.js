@@ -31,6 +31,10 @@ function getUserById(id, cb) {
     pool.query("SELECT * FROM users WHERE id=?", id, cb);
 }
 
+function getUserByName(firstName, lastName, cb) {
+    pool.query("SELECT * FROM users WHERE first_name='" + firstName + "' AND last_name='" + lastName + "'", cb);
+}
+
 function init () {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
     pool.query(data, (error) => {
@@ -46,5 +50,6 @@ module.exports = {
     addUser,
     getUserByEmail,
     getUserById,
-    init
+    init,
+    getUserByName
 };

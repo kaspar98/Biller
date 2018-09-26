@@ -39,28 +39,27 @@ router.post('/', (req, res) => {
 
     db.getUserByEmail(req.body.email, (err, results) => {
         if (err) throw err;
-
-    if (results.length) {
-        errors.push({text: "Email taken"});
-        reRender();
-    } else {
-        if (errors.length > 0) {
+        if (results.length) {
+            errors.push({text: "Email taken"});
             reRender();
-            errors.push({text: "Unknown error!"});
         } else {
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(req.body.password, salt, (err, hash) => {
-                    if (err) throw err;
-                    db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, hash, (err, results) => {
+            if (errors.length > 0) {
+                reRender();
+                errors.push({text: "Unknown error!"});
+            } else {
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(req.body.password, salt, (err, hash) => {
                         if (err) throw err;
-                    });
-                })
-            });
-            req.flash("success_msg", "You are now registered!");
-            res.redirect("/login");
+                        db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, hash, (err, results) => {
+                            if (err) throw err;
+                        });
+                    })
+                });
+                req.flash("success_msg", "You are now registered!");
+                res.redirect("/login");
 
+            }
         }
-    }
     });
 })
 ;
