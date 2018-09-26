@@ -1,0 +1,154 @@
+html {
+    background-color: #f5f5f5;
+}
+body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* -- SHORTCUTS -- */
+.center-vertical {
+    display: flex;
+    align-items: center;
+}
+.center-horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+/* TEKSTID */
+a {
+    text-decoration: none;
+}
+a:hover {
+    color: red;
+}
+
+/* MAIN ASJAD */
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1080px;
+}
+
+.content {
+    /*margin: 8em 0;*/
+    margin-top: 8em;
+    margin-bottom: 8em;
+}
+
+@media screen and (max-width: 32em) {
+    .content {
+        /*margin: 8em 0;*/
+        margin-top: 16em;
+        margin-bottom: 8em;
+    }
+}
+
+/* ELEMENTS */
+button {
+    color: #fff;
+    background-color: #444;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    padding: .6rem .75rem;
+    border-radius: .25rem;
+    font-size: 1em;
+}
+
+input {
+    padding: .4rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+label {
+    margin-bottom: 0.6em;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.navbar-items {
+    background-color: #333;
+    height: auto;
+    color: #fff;
+    padding: 8px 0;
+    display: grid;
+    gap: 1em;
+    grid-template-columns: min-content auto min-content;
+}
+.navbar-left {
+    display: grid;
+    gap: 2em;
+    grid-template-columns: min-content min-content min-content;
+}
+.navbar-right {
+    display: grid;
+    gap: 2em;
+    grid-template-columns: max-content auto auto;
+}
+.search {
+    display: inline;
+    overflow: hidden;
+    border-radius: .5em;
+}
+.navbar a{
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+}
+.navbar a:hover {
+    color: red;
+}
+.navbar a.navbar-logo {
+    font-size: 1.4em;
+    font-family: "Poppins";
+    font-weight: 600;
+}
+.search {
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 48em) {
+    .navbar-items {
+        grid-template-columns: min-content min-content;
+        grid-template-rows: auto auto;
+    }
+}
+@media screen and (max-width: 32em) {
+    .navbar-right {
+        grid-template-columns: max-content;
+        grid-template-rows: auto auto auto;
+    }
+}
+
+/* LOGIN/LOGOUT/SIGNUP */
+.register {
+    max-width: 23em;
+    width: 100%;
+}
+
+.form-control {
+    margin: 0.6em 0 0.4em 0;
+    width: 100%;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: .25rem;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}

@@ -10,6 +10,8 @@ const passport = require('passport');
 const db = require("./db/mysql");
 const app = express();
 
+app.use(express.static(__dirname + '/public'));
+
 const port = process.env.PORT || 5000;
 
 // Load routers
