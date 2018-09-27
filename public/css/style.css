@@ -90,7 +90,7 @@ label {
 .navbar-left {
     display: grid;
     gap: 2em;
-    grid-template-columns: min-content min-content min-content;
+    grid-template-columns: min-content min-content min-content min-content;
 }
 .navbar-right {
     display: grid;

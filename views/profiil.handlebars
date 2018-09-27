@@ -1,1 +1,13 @@
 <h1>Profiil</h1>
+<h2>Sõbrakutsed</h2>
+{{#each friendRequests}}
+<h4>{{firstName}} {{lastName}} ({{username}})</h4>
+<form method="post" action="/profiil/accept">
+    <button type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
+</form>
+<form method="post" action="/profiil/decline">
+    <button type="submit" name="declineRequest" value="{{id}}">Decline request</button>
+</form>
+{{else}}
+<h4>Sõbrakutsed puuduvad</h4>
+{{/each}}

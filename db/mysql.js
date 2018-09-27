@@ -3,18 +3,18 @@ const fs = require('fs');
 const path = require("path");
 
 const pool  = mysql.createPool({
-    host: "us-cdbr-iron-east-01.cleardb.net",
-    user: "b86c2dfee35cd0",
-    password: "2efcfe28",
-    database: "heroku_56b9a13d37e5dfb",
-    port: 3306,
-    multipleStatements: true
-    // host     : 'localhost',
-    // user     : 'root',
-    // password : '',
-    // database: 'biller',
-    // connectionLimit : 20,
+    // host: "us-cdbr-iron-east-01.cleardb.net",
+    // user: "b86c2dfee35cd0",
+    // password: "2efcfe28",
+    // database: "heroku_56b9a13d37e5dfb",
+    // port: 3306,
     // multipleStatements: true
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database: 'biller',
+    connectionLimit : 20,
+    multipleStatements: true
 });
 
 function addUser(firstName, lastName, email, username, password, cb) {
@@ -23,16 +23,27 @@ function addUser(firstName, lastName, email, username, password, cb) {
     pool.query(sql, cb);
 }
 
+function addFriend(uid, fid, cb) {
+    var sql = "INSERT INTO Friends(id1, id2, confirmed) VALUES ('"+uid+"', '"+fid+"', 0);";
+    pool.query(sql, cb);
+}
+
 function getUserByEmail(email, cb) {
     pool.query("SELECT * FROM Users WHERE email=?", email, cb);
 }
 
-function getUserById(id, cb) {
-    pool.query("SELECT * FROM Users WHERE id=?", id, cb);
+function getUserByName(firstName, lastName, cb) {
+    // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
+    pool.query("SELECT DISTINCT firstName, lastName, id, username FROM users, friends WHERE NOT id=id1 AND NOT id=id2" +
+        " AND firstName='" + firstName + "' AND lastName='" + lastName + "'", cb);
 }
 
-function getUserByName(firstName, lastName, cb) {
-    pool.query("SELECT * FROM users WHERE first_name='" + firstName + "' AND last_name='" + lastName + "'", cb);
+function getFriendRequests(uid, cb){
+    pool.query("SELECT firstName, lastName, username, id FROM friends, users WHERE id1=id AND id2=? AND confirmed=0", uid, cb);
+}
+
+function changeFriendRequestStatus(uid, fid, status, cb){
+    pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
 }
 
 function init () {
@@ -42,14 +53,16 @@ function init () {
             console.log(error.message)
             throw error;
         }
-        console.log("Table created")
+        console.log("Database reset!")
     });
 }
 
 module.exports = {
     addUser,
     getUserByEmail,
-    getUserById,
     init,
-    getUserByName
+    getUserByName,
+    addFriend,
+    getFriendRequests,
+    changeFriendRequestStatus
 };
