@@ -20,6 +20,7 @@ const bilanssRouter = require('./routes/bilanss');
 const loginRouter = require('./routes/login');
 const profiilRouter = require('./routes/profiil');
 const signUpRouter = require('./routes/signup');
+const eventRouter = require('./routes/event');
 const logoutRouter = require('./routes/logout');
 const addRouter = require('./routes/add');
 
@@ -65,6 +66,7 @@ app.use('/bilanss', bilanssRouter);
 app.use('/profiil', profiilRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
+app.use('/event', eventRouter);
 app.use('/logout', logoutRouter);
 app.use('/add', addRouter);
 

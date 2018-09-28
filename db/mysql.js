@@ -46,9 +46,12 @@ function changeFriendRequestStatus(uid, fid, status, cb){
     pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
 }
 
-function addEvent(dscription, fromid, toid, amount, cb){
-    pool.query("INSERT INTO events(idFrom, idTo, amount, moment) VALUES ('"+fromid+"', '"+toid+"', '"+amount+"', CURRENT_TIMESTAMP);", cb);
+function addEvent(description, fromid, toid, amountJe, cb){
+    // pool.query("SELECT * FROM Users", cb);
+    pool.query("INSERT INTO Events(id, description, moment) VALUES ('"+1+"', '"+"lorem ipsum"+"', '"+Date.now()+"');", cb);
+    pool.query("INSERT INTO Payments(idFrom, idTo, amount, eventId) VALUES ('"+fromid+"', '"+toid+"', '"+amountJe+"', '"+1+"');", cb);
 }
+
 
 function init () {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
@@ -69,5 +72,5 @@ module.exports = {
     addFriend,
     getFriendRequests,
     changeFriendRequestStatus,
-    addEvent
+    addEvent,
 };
