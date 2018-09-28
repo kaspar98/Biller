@@ -46,10 +46,13 @@ function changeFriendRequestStatus(uid, fid, status, cb){
     pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
 }
 
-function addEvent(description, fromid, toid, amountJe, cb){
-    // pool.query("SELECT * FROM Users", cb);
-    pool.query("INSERT INTO Events(id, description, moment) VALUES ('"+1+"', '"+"lorem ipsum"+"', '"+Date.now()+"');", cb);
-    pool.query("INSERT INTO Payments(idFrom, idTo, amount, eventId) VALUES ('"+fromid+"', '"+toid+"', '"+amountJe+"', '"+1+"');", cb);
+function addEvent(descriptionIn, picid, cb) {
+    var sql = "INSERT INTO events (description, pictureId) VALUES ('"+descriptionIn+"', '"+picid+"'); SELECT LAST_INSERT_ID();";
+    pool.query(sql, cb);
+}
+function addPayment(fromid, toid, amountIn, eventid, cb){
+    var sql = "INSERT INTO payments (idFrom, idTo, amount, confirmed, eventId) VALUES ('"+fromid+"', '"+toid+"', '"+amountIn+"', '"+eventid+"', 0);";
+    pool.query(sql, cb);
 }
 
 
@@ -57,7 +60,7 @@ function init () {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
     pool.query(data, (error) => {
         if (error) {
-            console.log(error.message)
+            console.log(error.message);
             throw error;
         }
         console.log("Database reset!")
@@ -73,4 +76,5 @@ module.exports = {
     getFriendRequests,
     changeFriendRequestStatus,
     addEvent,
+    addPayment
 };

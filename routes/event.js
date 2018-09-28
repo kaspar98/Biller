@@ -12,9 +12,9 @@ router.post('/', (req, res) => {
         res.render('event', {
             errors: errors,
             eventDescription: req.body.eventDescription,
-            ifFrom: req.body.lastName,
-            idTo: req.body.email,
-            amount: req.body.password,
+            idFrom: req.body.idFrom,
+            idTo: req.body.idTo,
+            amount: req.body.amount,
         });
     }
 
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
         errors.push({text: "Amount pos"});
     }
 
-    if (!req.body.ifFrom) {
+    if (!req.body.idFrom) {
         errors.push({text: 'Please add idfrom'});
     }
 
@@ -32,8 +32,24 @@ router.post('/', (req, res) => {
         errors.push({text: 'Please add idto'});
     }
 
-    db.addEvent(req.body.eventDescription, req.body.ifFrom, req.body.idTo, req.body.amount, (err, results) => {
+    // lisada id-de kontroll
+
+    // console.log(req.body.eventDescription, req.body.idFrom, req.body.idTo, req.body.amount);
+
+
+    db.addEvent(req.body.eventDescription, 0, (err, results) => {
         if (err) throw err;
+        // console.log(results);
+        // console.log(results[1][0]["LAST_INSERT_ID()"]);
+        let eventId = results[1][0]["LAST_INSERT_ID()"];
+
+        // db.addPayment(req.body.idFrom, req.body.idTo, req.body.amount, eventId, (err, results) => {
+        //     if (err) throw err;
+        //     console.log(results);
+        //     console.log(results[1][0]["LAST_INSERT_ID()"]);
+        //
+        //     req.flash("success_msg", "Payment made!");
+        // });
 
         req.flash("success_msg", "Event made!");
         res.redirect("/event");

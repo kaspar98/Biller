@@ -18,7 +18,7 @@ CREATE TABLE Payments (
 	idTo INT(32) NOT NULL,
 	amount FLOAT(32) NOT NULL,
 	confirmed INT(2) NOT NULL,
-	eventId INT(32) NOT NULL,
+	eventId INT(32), -- tegelt NOT NULL
 	PRIMARY KEY (id)
 );
 
@@ -54,19 +54,13 @@ CREATE PROCEDURE sp_new_user(IN a_firstName varchar(255), IN a_lastName varchar(
         VALUES (a_firstName, a_lastName, a_username, a_password, a_email);
     END;
 
---   CREATE PROCEDURE sp_new_payment(IN a_idFrom INT(32), IN a_idTo INT(32), IN a_amount FLOAT(32),
---                           IN a_amount FLOAT(32), IN a_confirmed INT(2), IN a_eventId INT(32))
---   BEGIN
---   INSERT INTO Users(firstName, lastName, username, password, email)
---       VALUES (a_firstName, a_lastName, a_username, a_password, a_email);
---   END;
-
 INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Miki", "Hiir", "a@a", "Mikimer177", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
 INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Kari", "Kakk", "b@a", "kakukas", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
 INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Miki", "Hiir", "c@a", "H3RO", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
 INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Muki", "Hiir", "ab@a", "Lurr", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
 INSERT INTO friends (id1, id2, confirmed) VALUES (2,1,0);
 INSERT INTO friends (id1, id2, confirmed) VALUES (3,1,0);
+INSERT INTO Payments (idFrom, idTo, amount, confirmed) VALUES (3,1,100.99,0);
 
 /*
 --CREATE TABLE users(
