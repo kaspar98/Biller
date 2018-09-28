@@ -1,7 +1,15 @@
 {{#if success_msg}}
-    <div class="center-horizontal">{{success_msg}}</div>
+    <div class="center-horizontal">
+        <div class="message">
+            {{success_msg}}
+        </div>
+    </div>
 {{/if}}
 
 {{#if error_msg}}
-    <div class="center-horizontal">{{error_msg}}</div>
+    <div class="center-horizontal">
+        <div class="message error">
+            {{error_msg}}
+        </div>
+    </div>
 {{/if}}

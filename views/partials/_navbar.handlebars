@@ -5,21 +5,21 @@
                 <a class="navbar-logo" href="/">Biller</a>
                 <a href="/">Avaleht</a>
                 <a href="/Bilanss">Bilanss</a>
-                <a href="/Profiil">Profiil</a>
+                <a class="navbar-profiil" href="/Profiil">Profiil</a>
             </div>
 
             <div></div>
 
             <div class="navbar-right">
                 <form method="post" action="/add" class="search">
-                    <input type="search" placeholder="Search" name="findName" aria-label="Sisesta nimi">
+                    <input type="search" placeholder="Sõbra nimi" name="findName">
                     <button type="submit">Otsi</button>
                 </form>
                 {{#if user}}
-                <a class="nav-link log" href="/logout">LogOut</a>
+                <a class="nav-link log" href="/logout">LogiVälja</a>
                 {{else}}
-                <a class="nav-link log" href="/login">LogIn</a>
-                <a class="nav-link sign" href="/signup">SignUp</a>
+                <a class="nav-link log" href="/login">LogiSisse</a>
+                <a class="nav-link sign" href="/signup">Registreeru</a>
                 {{/if}}
             </div>
         </div>

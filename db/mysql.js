@@ -46,6 +46,10 @@ function changeFriendRequestStatus(uid, fid, status, cb){
     pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
 }
 
+function addEvent(dscription, fromid, toid, amount, cb){
+    pool.query("INSERT INTO events(idFrom, idTo, amount, moment) VALUES ('"+fromid+"', '"+toid+"', '"+amount+"', CURRENT_TIMESTAMP);", cb);
+}
+
 function init () {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
     pool.query(data, (error) => {
@@ -64,5 +68,6 @@ module.exports = {
     getUserByName,
     addFriend,
     getFriendRequests,
-    changeFriendRequestStatus
+    changeFriendRequestStatus,
+    addEvent
 };

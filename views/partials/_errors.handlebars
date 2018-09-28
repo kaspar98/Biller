@@ -1,9 +1,17 @@
 {{#if error}}
-    <div class="center-horizontal">{{error}}</div>
+    <div class="center-horizontal">
+        <div class="message error">
+            {{error}}
+        </div>
+    </div>
 {{/if}}
 
 {{#each errors}}
-    <div class="center-horizontal">{{text}}</div>
+    <div class="center-horizontal">
+        <div class="message error">
+            {{text}}
+        </div>
+    </div>
 {{else}}
 
 {{/each}}
