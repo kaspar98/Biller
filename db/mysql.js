@@ -12,7 +12,7 @@ const pool  = mysql.createPool({
     host     : 'localhost',
     user     : 'root',
     password : '',
-    database: 'biller',
+    database: 'heroku_56b9a13d37e5dfb',
     connectionLimit : 20,
     multipleStatements: true
 });
@@ -46,12 +46,30 @@ function changeFriendRequestStatus(uid, fid, status, cb){
     pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
 }
 
-function addEvent(descriptionIn, picid, cb) {
-    var sql = "INSERT INTO events (description, pictureId) VALUES ('"+descriptionIn+"', '"+picid+"'); SELECT LAST_INSERT_ID();";
+function addEvent(title, descriptionIn, creatorId, cb) {
+    var sql = "INSERT INTO events(title, description, creatorId) VALUES ('"+title+"', '"+descriptionIn+"', '"+creatorId+"')";
     pool.query(sql, cb);
 }
+
+function getEvents(uid, cb) {
+    var sql = "SELECT * FROM v_events_and_payments WHERE creatorId='"+uid+"' OR idFrom='"+uid+"' OR idTo='"+uid+"'";
+    pool.query(sql, cb);
+}
+
+function getEmptyEvents(uid, cb) {
+    var sql = "SELECT E.id as eventId, creatorId, firstName as receiverFName, lastName as receiverLName, title, description, pictureId" +
+        " FROM Events as E, Users WHERE NOT EXISTS (SELECT * FROM payments WHERE eventId=E.id)" +
+        " AND creatorId=users.id AND creatorId=?";
+    pool.query(sql, uid, cb);
+}
+
 function addPayment(fromid, toid, amountIn, eventid, cb){
     var sql = "INSERT INTO payments (idFrom, idTo, amount, confirmed, eventId) VALUES ('"+fromid+"', '"+toid+"', '"+amountIn+"', '"+eventid+"', 0);";
+    pool.query(sql, cb);
+}
+
+function changePaymentStatus(id, status, cb){
+    var sql = "UPDATE payments SET confirmed='"+status+"' WHERE id='"+id+"'";
     pool.query(sql, cb);
 }
 
@@ -76,5 +94,8 @@ module.exports = {
     getFriendRequests,
     changeFriendRequestStatus,
     addEvent,
-    addPayment
+    addPayment,
+    getEvents,
+    getEmptyEvents,
+    changePaymentStatus
 };
