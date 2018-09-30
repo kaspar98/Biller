@@ -4,6 +4,7 @@ const fileUpload = require("express-fileupload");
 const path = require("path");
 const flash = require('connect-flash');
 const bodyParser = require("body-parser");
+const env = require('dotenv').config();
 const session = require('express-session');
 const passport = require('passport');
 const db = require("./db/mysql");
