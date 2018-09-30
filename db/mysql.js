@@ -3,18 +3,18 @@ const fs = require('fs');
 const path = require("path");
 
 const pool  = mysql.createPool({
-    // host: "us-cdbr-iron-east-01.cleardb.net",
-    // user: "b86c2dfee35cd0",
-    // password: "2efcfe28",
-    // database: "heroku_56b9a13d37e5dfb",
-    // port: 3306,
-    // multipleStatements: true
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database: 'heroku_56b9a13d37e5dfb',
-    connectionLimit : 20,
+    host: "us-cdbr-iron-east-01.cleardb.net",
+    user: "b86c2dfee35cd0",
+    password: "2efcfe28",
+    database: "heroku_56b9a13d37e5dfb",
+    port: 3306,
     multipleStatements: true
+    // host     : 'localhost',
+    // user     : 'root',
+    // password : '',
+    // database: 'heroku_56b9a13d37e5dfb',
+    // connectionLimit : 20,
+    // multipleStatements: true
 });
 
 function addUser(firstName, lastName, email, username, password, cb) {
