@@ -58,6 +58,43 @@ CREATE PROCEDURE sp_new_user(IN a_firstName varchar(255), IN a_lastName varchar(
         VALUES (a_firstName, a_lastName, a_username, a_password, a_email);
     END;
 
+CREATE PROCEDURE sp_add_friend(IN uid INT(32), IN fid INT(32))
+    BEGIN
+    INSERT INTO Friends(id1, id2, confirmed) VALUES (uid, fid, 0);
+    END;
+
+CREATE PROCEDURE sp_changeFriendRequestStatus(IN uid INT(32), IN fid INT(32), IN status INT(2))
+    BEGIN
+    UPDATE friends SET confirmed=status WHERE id2=uid AND id1=fid;
+    END;
+
+CREATE PROCEDURE sp_addEvent(IN a_title varchar(255), IN descriptionIn varchar(255), IN a_creatorId INT(32))
+    BEGIN
+    INSERT INTO events(title, description, creatorId) VALUES (a_title, descriptionIn, a_creatorId);
+    END;
+
+CREATE PROCEDURE sp_addPayment(IN fromid INT(32), IN toid INT(32), IN amountIn FLOAT(32), IN a_eventid INT(32))
+    BEGIN
+    INSERT INTO payments (idFrom, idTo, amount, confirmed, eventId) VALUES (fromid, toid, amountIn, 0, a_eventid);
+    END;
+
+CREATE PROCEDURE sp_changePaymentStatus(IN uid INT(32), IN status INT(2))
+    BEGIN
+    UPDATE payments SET confirmed=status WHERE id=uid;
+    END;
+
+CREATE VIEW v_users AS
+  SELECT * FROM users;
+
+CREATE VIEW v_friends AS
+  SELECT * FROM friends;
+
+CREATE VIEW v_events AS
+  SELECT * FROM events;
+
+CREATE VIEW v_payments AS
+  SELECT * FROM payments;
+
 -- Tegin selle vaate, et oleks lihtsam luua vaadet v_payments_and_names
 CREATE VIEW v_payments_and_payers AS
   SELECT  idFrom, idTo, amount, confirmed, eventId, payments.id as paymentId, firstName as payerFName, lastName as payerLName FROM Users, Payments
@@ -75,23 +112,23 @@ CREATE VIEW v_events_and_payments AS
    FROM Events, v_payments_and_names
    WHERE eventId=Events.id;
 
--- INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Kaspar", "Valk", "a@a", "Mikimer177", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
--- INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Kari", "Kakk", "b@a", "kakukas", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
--- INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Mari", "Murakas", "c@a", "H3RO", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
+--INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Kaspar", "Valk", "a@a", "Mikimer177", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
+--INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Kari", "Kakk", "b@a", "kakukas", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
+--INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Mari", "Murakas", "c@a", "H3RO", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
 -- INSERT INTO users (firstName, lastName, email, username, password) VALUES ("Miki", "Hiir", "ab@a", "Lurr", "$2a$10$LpXu5oXrKHnvT5TfPqzAXOwQa2RnjjjO0//bP58v6WVlVZx8tWIRS");
--- INSERT INTO friends (id1, id2, confirmed) VALUES (2,1,0);
--- INSERT INTO friends (id1, id2, confirmed) VALUES (3,1,1);
+--INSERT INTO friends (id1, id2, confirmed) VALUES (2,1,0);
+--INSERT INTO friends (id1, id2, confirmed) VALUES (3,1,1);
 --
--- INSERT INTO events(title, description, creatorId) VALUES ("Taksosõit", "koolist koju", 3);
--- INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (1, 3, 10, 0, 1);
--- INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (2, 3, 10, 0, 1);
+--INSERT INTO events(title, description, creatorId) VALUES ("Taksosõit", "koolist koju", 3);
+--INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (1, 3, 10, 0, 1);
+--INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (2, 3, 10, 0, 1);
 --
--- INSERT INTO events(title, description, creatorId) VALUES ("pitsakas", "kolmap pitsa", 1);
--- INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (3, 1, 5, 0, 2);
--- INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (2, 1, 10, 0, 2);
+--INSERT INTO events(title, description, creatorId) VALUES ("pitsakas", "kolmap pitsa", 1);
+--INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (3, 1, 5, 0, 2);
+--INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (2, 1, 10, 0, 2);
 --
--- INSERT INTO events(title, description, creatorId) VALUES ("söömas", "teisip supp", 1);
--- INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (3, 1, 5, 0, 3);
+--INSERT INTO events(title, description, creatorId) VALUES ("söömas", "teisip supp", 1);
+--INSERT INTO payments(idFrom, idTo, amount, confirmed, eventId) VALUES (3, 1, 5, 0, 3);
 --
 -- INSERT INTO events(title, description, creatorId) VALUES ("test", "test", 1);
 -- INSERT INTO events(title, description, creatorId) VALUES ("test2", "test2", 1);

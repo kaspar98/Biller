@@ -7,7 +7,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     let jupid = req.body.findName.split(" ");
     let last = jupid[jupid.length - 1];
     let first = jupid.join(" ").replace(" " + last, "");
-    db.getUserByName(first, last, (err, results) => {
+    db.getUserByName(first, last, req.user[0]["id"], (err, results) => {
         for (i = 0; i < results.length; i++) {
             if(results[i]["id"] == req.user[0]["id"]){
                 results.splice(i, 1);

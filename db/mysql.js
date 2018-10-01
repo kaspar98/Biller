@@ -18,30 +18,30 @@ function addUser(firstName, lastName, email, username, password, cb) {
 }
 
 function addFriend(uid, fid, cb) {
-    var sql = "INSERT INTO Friends(id1, id2, confirmed) VALUES ('"+uid+"', '"+fid+"', 0);";
+    var sql = "CALL sp_add_friend('"+uid+"', '"+fid+"');";
     pool.query(sql, cb);
 }
 
 function getUserByEmail(email, cb) {
-    pool.query("SELECT * FROM Users WHERE email=?", email, cb);
+    pool.query("SELECT * FROM v_users WHERE email=?", email, cb);
 }
 
-function getUserByName(firstName, lastName, cb) {
+function getUserByName(firstName, lastName, uid, cb) {
     // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
-    pool.query("SELECT DISTINCT firstName, lastName, id, username FROM users, friends WHERE NOT id=id1 AND NOT id=id2" +
+    pool.query("SELECT DISTINCT firstName, lastName, id, username FROM v_users, v_friends WHERE NOT id1='"+uid+"' AND NOT id2='"+uid+"'" +
         " AND firstName='" + firstName + "' AND lastName='" + lastName + "'", cb);
 }
 
 function getFriendRequests(uid, cb){
-    pool.query("SELECT firstName, lastName, username, id FROM friends, users WHERE id1=id AND id2=? AND confirmed=0", uid, cb);
+    pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE id1=id AND id2=? AND confirmed=0", uid, cb);
 }
 
 function changeFriendRequestStatus(uid, fid, status, cb){
-    pool.query("UPDATE friends SET confirmed='"+status+"' WHERE id2='"+uid+"' AND id1='"+fid+"'", cb);
+    pool.query("CALL sp_changeFriendRequestStatus('"+uid+"','"+fid+"','"+status+"')", cb);
 }
 
 function addEvent(title, descriptionIn, creatorId, cb) {
-    var sql = "INSERT INTO events(title, description, creatorId) VALUES ('"+title+"', '"+descriptionIn+"', '"+creatorId+"')";
+    var sql = "CALL sp_addEvent('"+title+"', '"+descriptionIn+"', '"+creatorId+"')";
     pool.query(sql, cb);
 }
 
@@ -52,18 +52,18 @@ function getEvents(uid, cb) {
 
 function getEmptyEvents(uid, cb) {
     var sql = "SELECT E.id as eventId, creatorId, firstName as receiverFName, lastName as receiverLName, title, description, pictureId" +
-        " FROM Events as E, Users WHERE NOT EXISTS (SELECT * FROM payments WHERE eventId=E.id)" +
-        " AND creatorId=users.id AND creatorId=?";
+        " FROM v_events as E, v_users WHERE NOT EXISTS (SELECT * FROM v_payments WHERE eventId=E.id)" +
+        " AND creatorId=v_users.id AND creatorId=?";
     pool.query(sql, uid, cb);
 }
 
 function addPayment(fromid, toid, amountIn, eventid, cb){
-    var sql = "INSERT INTO payments (idFrom, idTo, amount, confirmed, eventId) VALUES ('"+fromid+"', '"+toid+"', '"+amountIn+"', '"+eventid+"', 0);";
+    var sql = "CALL sp_addPayment('"+fromid+"', '"+toid+"', '"+amountIn+"', '"+eventid+"')";
     pool.query(sql, cb);
 }
 
 function changePaymentStatus(id, status, cb){
-    var sql = "UPDATE payments SET confirmed='"+status+"' WHERE id='"+id+"'";
+    var sql = "CALL sp_changePaymentStatus('"+status+"', '"+id+"')";
     pool.query(sql, cb);
 }
 
