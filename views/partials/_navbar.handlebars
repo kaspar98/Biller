@@ -3,9 +3,9 @@
         <div class="navbar-items">
             <div class="navbar-left">
                 <a class="navbar-logo" href="/">Biller</a>
-                <a href="/">Avaleht</a>
-                <a href="/Bilanss">Bilanss</a>
-                <a class="navbar-profiil" href="/Profiil">Profiil</a>
+                <a class="navbar-button" href="/">Avaleht</a>
+                <a class="navbar-button" href="/Bilanss">Bilanss</a>
+                <a class="navbar-button" href="/Profiil">Profiil</a>
             </div>
 
             <div></div>
@@ -16,10 +16,10 @@
                     <button type="submit">Otsi</button>
                 </form>
                 {{#if user}}
-                <a class="nav-link log" href="/logout">LogiVälja</a>
+                <a class="navbar-button" href="/logout">Logi välja</a>
                 {{else}}
-                <a class="nav-link log" href="/login">LogiSisse</a>
-                <a class="nav-link sign" href="/signup">Registreeru</a>
+                <a class="navbar-button" href="/login">Logi sisse</a>
+                <a class="navbar-button" href="/signup">Registreeru</a>
                 {{/if}}
             </div>
         </div>
