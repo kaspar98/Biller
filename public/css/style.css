@@ -1,6 +1,7 @@
 html {
     background-color: #f5f5f5;
 }
+
 body {
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
@@ -11,6 +12,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 .center-horizontal {
     display: flex;
     justify-content: center;
@@ -20,6 +22,7 @@ body {
 a {
     text-decoration: none;
 }
+
 a:hover {
     color: red;
 }
@@ -60,6 +63,7 @@ button {
     border-radius: .25rem;
     font-size: 1em;
 }
+
 button:hover {
     background-color: #222;
     cursor: pointer;
@@ -83,6 +87,7 @@ label {
     width: 100%;
     font-size: 0.9em;
 }
+
 .navbar-items {
     background-color: #333;
     height: auto;
@@ -95,16 +100,19 @@ label {
     /*display: flex;*/
     /*flex-direction: row;*/
 }
+
 .navbar-left {
     display: grid;
     gap: 2em;
     grid-template-columns: min-content min-content min-content min-content min-content;
 }
+
 .navbar-right {
     display: grid;
     gap: 2em;
     grid-template-columns: max-content auto auto;
 }
+
 .search {
     display: inline;
     overflow: hidden;
@@ -113,35 +121,65 @@ label {
     /*line-height: 1;*/
     /*font-size: 0.8em;*/
 }
-.navbar a{
+
+.navbar a {
     color: #ddd;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
     /*margin: 0.2em 0;*/
     /*padding: 0 0.6em;*/
 
     display: flex;
     align-items: center;
     /*border-radius: 0.25em;*/
+
+    white-space: nowrap;
+    /*overflow: hidden;*/
 }
-.navbar a:hover {
-    color: #fff;
-    /*background-color: #444;*/
+
+.navbar a.navbar-button:hover {
+    color: #333333;
+    background-color: #dddddd;
+    border-radius: 10em;
+    box-sizing: border-box;
+    box-shadow: 0.1em 0.1em 0.2em #111111;
 }
+
+.navbar a.navbar-button:active {
+    color: #333333;
+    background-color: #aaaaaa;
+}
+
 .navbar a.navbar-logo {
-    font-size: 1.4em;
-    font-family: "Poppins";
+    font-size: 1.45em;
+    font-family: Poppins;
     font-weight: 600;
 }
+
+.navbar a.navbar-logo:hover {
+    color: #ffffff;
+    text-shadow: 0.1em 0.1em 0.2em #111111;
+}
+
+.navbar a.navbar-logo:active {
+    color: #aaaaaa;
+}
+
 .search {
     display: flex;
     flex-direction: row;
 }
 
-@media screen and (max-width: 48em) {
+@media screen and (max-width: 58em) {
     .navbar-items {
         grid-template-columns: min-content min-content;
         grid-template-rows: auto auto;
     }
 }
+
 @media screen and (max-width: 32em) {
     .navbar-right {
         grid-template-columns: max-content;
