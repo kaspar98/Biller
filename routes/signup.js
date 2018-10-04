@@ -36,29 +36,38 @@ router.post('/', (req, res) => {
     if (!req.body.lastName) {
         errors.push({text: 'Please add a last name'});
     }
-
+ // Email check
     db.getUserByEmail(req.body.email, (err, results) => {
         if (err) throw err;
         if (results.length) {
             errors.push({text: "Email taken"});
             reRender();
         } else {
-            if (errors.length > 0) {
-                reRender();
-                errors.push({text: "Unknown error!"});
-            } else {
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(req.body.password, salt, (err, hash) => {
-                        if (err) throw err;
-                        db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, hash, (err, results) => {
-                            if (err) throw err;
+            // Username taken check
+            db.getUserByUsername(req.body.username, (err1, results1) => {
+                if (err1) throw err1;
+                if (results1.length) {
+                    errors.push({text: "Username taken"});
+                    reRender();
+                }
+                else {
+                    if (errors.length > 0) {
+                        reRender();
+                        errors.push({text: "Unknown error!"});
+                    } else {
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(req.body.password, salt, (err, hash) => {
+                                if (err) throw err;
+                                db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, "", hash, (err, results) => {
+                                    if (err) throw err;
+                                });
+                            })
                         });
-                    })
-                });
-                req.flash("success_msg", "You are now registered!");
-                res.redirect("/login");
-
-            }
+                        req.flash("success_msg", "You are now registered!");
+                        res.redirect("/login");
+                    }
+                }
+            });
         }
     });
 })

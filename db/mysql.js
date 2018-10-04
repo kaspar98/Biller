@@ -11,15 +11,19 @@ const pool  = mysql.createPool({
     multipleStatements: true
 });
 
-function addUser(firstName, lastName, email, username, password, cb) {
+function addUser(firstName, lastName, email, username, password, googleID, cb) {
     var sql = "CALL sp_new_user('" + firstName + "', '" + lastName + "', '" + email + "', '" +
-        username + "', '" + password + "');";
+        username + "', '" + password + "', '"+googleID+"');";
     pool.query(sql, cb);
 }
 
 function addFriend(uid, fid, cb) {
     var sql = "CALL sp_add_friend('"+uid+"', '"+fid+"');";
     pool.query(sql, cb);
+}
+
+function getUserByUsername(username, username, cb) {
+    pool.query("SELECT * FROM v_users WHERE username=?", username, cb);
 }
 
 function getUserByEmail(email, cb) {
@@ -30,6 +34,10 @@ function getUserByName(firstName, lastName, uid, cb) {
     // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
     pool.query("SELECT DISTINCT firstName, lastName, id, username FROM v_users, v_friends WHERE NOT id1='"+uid+"' AND NOT id2='"+uid+"'" +
         " AND firstName='" + firstName + "' AND lastName='" + lastName + "'", cb);
+}
+
+function getUserByGoogleID(googleID, cb) {
+    pool.query("SELECT * FROM v_users WHERE googleID=?", googleID, cb);
 }
 
 function getFriendRequests(uid, cb){
@@ -81,6 +89,7 @@ function init () {
 
 module.exports = {
     addUser,
+    getUserByUsername,
     getUserByEmail,
     init,
     getUserByName,
@@ -91,5 +100,6 @@ module.exports = {
     addPayment,
     getEvents,
     getEmptyEvents,
-    changePaymentStatus
+    changePaymentStatus,
+    getUserByGoogleID
 };

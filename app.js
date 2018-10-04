@@ -39,9 +39,9 @@ app.use(fileUpload());
 
 // Express session middleware
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }));
 
 // Passport middleware
