@@ -1,77 +1,102 @@
 {{#if user}}
     <div>
-        <div class="register">
-            <h3>Lisa sündmus</h3>
-            <form method="post" action="/addevent">
-                <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Sündmuse kirjeldus</label>
-                    <textarea class="form-control" name="eventDescription" required></textarea>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+        <div class="event">
+            <div class="event-content">
+                <h3>Lisa sündmus</h3>
+                <form method="post" action="/addevent">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sündmuse kirjeldus</label>
+                        <textarea class="form-control" name="eventDescription" required></textarea>
+                    </div>
+                    <button type="submit">Lisa</button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- Sündmused, kuhu kasutaja on kaasatud ja on unconfirmed -->
-    <h1>UNCONFIRMED EVENTS</h1>
+    <h2>Kinnitamata sündmused:</h2>
     {{#each otherEventsUnconfirmed}}
-        <h2>{{this.[0].title}}</h2>
-        <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-        <p>{{this.[0].description}}</p>
-        <h4>Olen võlgu: {{this.[0].amount}} </h4>
-        <form method="post" action="/confirm">
-            <button type="submit" name="confirmPayment" value="{{this.[0].paymentId}}">Kinnita nõue!</button>
-        </form>
-        <form method="post" action="/decline">
-            <button type="submit" name="declinePayment" value="{{this.[0].paymentId}}">Tühista nõue!</button>
-        </form>
-        </br>
-        </br>
+        <div class="event">
+            <div class="event-header">
+                <div class="event-content">
+                    <h3>{{this.[0].title}}</h3>
+                </div>
+            </div>
+        <div class="event-body">
+            <div class="event-content">
+                <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
+                <p>{{this.[0].description}}</p>
+                <h4>Olen võlgu: {{this.[0].amount}} </h4>
+                <form method="post" action="/confirm">
+                    <button type="submit" name="confirmPayment" value="{{this.[0].paymentId}}">Kinnita nõue!</button>
+                </form>
+                <form method="post" action="/decline">
+                    <button type="submit" name="declinePayment" value="{{this.[0].paymentId}}">Tühista nõue!</button>
+                </form>
+            </div>
+        </div>
     {{/each}}
 
     <!-- Sündmused, mille omanik kasutaja on -->
-    <h1>MY EVENTS</h1>
+    <h2>Minu sündmused:</h2>
+
     {{#each myEvents}}
-        <h2>{{this.[0].title}}</h2>
-        <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-        <p>{{this.[0].description}}</p>
-        <h4>Võlgnikud: </h4>
-        {{#each this}}
-            <div>
-                <p>{{payerFName}} {{payerLName}} {{amount}}</p>
+            <div class="event">
+                <div class="event-header">
+                    <div class="event-content">
+                        <h3>{{this.[0].title}}</h3>
+                    </div>
+                </div>
+                <div class="event-body">
+                    <div class="event-content">
+                        <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
+                        <p>{{this.[0].description}}</p>
+                        <h4>Võlgnikud: </h4>
+                        {{#each this}}
+                            <div>
+                                <p>{{payerFName}} {{payerLName}} {{amount}}</p>
+                            </div>
+                        {{/each}}
+                        <form method="post" action="/addpayer">
+                            <div class="form-group">
+                                <label>Võlgniku nimi</label>
+                                <input type="text" name="payerName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Summa</label>
+                                <input type="text" name="amount" class="form-control" required>
+                            </div>
+                            <button type="submit" name="addPayer" value="{{this.[0].eventId}}">Lisa võlgnik</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-        {{/each}}
-        <form method="post" action="/addpayer">
-            <div class="form-group">
-                <label>Võlgniku nimi</label>
-                <input type="text" name="payerName" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Summa</label>
-                <input type="text" name="amount" class="form-control" required>
-            </div>
-            <button type="submit" name="addPayer" value="{{this.[0].eventId}}">Lisa võlgnik</button>
-        </form>
-        </br>
-        </br>
     {{/each}}
 
     <!-- Sündmused, kuhu kasutaja on kaasatud ja on confirmed -->
-    <h1>CONFIRMED EVENTS</h1>
+    <h2>Kinnitatud sündmused:</h2>
     {{#each otherEventsConfirmed}}
-        <h2>{{this.[0].title}}</h2>
-        <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-        <p>{{this.[0].description}}</p>
-        <h4>Olen võlgu: {{this.[0].amount}} </h4>
-        </br>
-        </br>
+            <div class="event">
+                <div class="event-header">
+                    <div class="event-content">
+                        <h2>{{this.[0].title}}</h2>
+                    </div>
+                </div>
+                <div class="event-body">
+                    <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
+                    <p>{{this.[0].description}}</p>
+                    <h4>Olen võlgu: {{this.[0].amount}} </h4>
+                </div>
+            </div>
     {{/each}}
 
 
 {{else}}
-    <h1>Welcome</h1>
+        <h1>Welcome</h1>
 {{/if}}
+</div>
