@@ -67,8 +67,16 @@ router.post('/addevent', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/addpayer', ensureAuthenticated, (req, res) => {
-    req.flash("success_msg", "See nupp ei tee hetkel midagi");
-    res.redirect("/");
+    db.addPayment(req.user[0]["id"], req.body.friendName, req.body.friendPayAmount, req.body.eventIdAddPayer, (err, results) => {
+        if (err){
+          req.flash("error_msg", "Ebakorrektne sisend");
+          res.redirect("/");
+
+        } else{
+            req.flash("success_msg", "Võlgnik lisatud!");
+            res.redirect("/");
+        }
+    })
 });
 
 router.post('/confirm', ensureAuthenticated, (req, res) => {

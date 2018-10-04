@@ -70,8 +70,8 @@ function getEmptyEvents(uid, cb) {
     pool.query(sql, uid, cb);
 }
 
-function addPayment(fromid, toid, amountIn, eventid, cb){
-    var sql = "CALL sp_addPayment('"+fromid+"', '"+toid+"', '"+amountIn+"', '"+eventid+"')";
+function addPayment(toid, fromusername, amountIn, eventid, cb){
+    var sql = "CALL sp_addPayment('"+toid+"', '"+fromusername+"', '"+amountIn+"', '"+eventid+"')";
     pool.query(sql, cb);
 }
 
