@@ -22,7 +22,7 @@ function addFriend(uid, fid, cb) {
     pool.query(sql, cb);
 }
 
-function getUserByUsername(username, username, cb) {
+function getUserByUsername(username, cb) {
     pool.query("SELECT * FROM v_users WHERE username=?", username, cb);
 }
 
@@ -42,6 +42,11 @@ function getUserByGoogleID(googleID, cb) {
 
 function getFriendRequests(uid, cb){
     pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE id1=id AND id2=? AND confirmed=0", uid, cb);
+}
+
+function getFriends(uid, cb){
+    pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE id1='"+uid+"' OR id2='"+uid+"'" +
+        " AND confirmed=1 AND id<>'"+uid+"' ", cb);
 }
 
 function changeFriendRequestStatus(uid, fid, status, cb){
@@ -94,6 +99,7 @@ module.exports = {
     init,
     getUserByName,
     addFriend,
+    getFriends,
     getFriendRequests,
     changeFriendRequestStatus,
     addEvent,

@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(req.body.password, salt, (err, hash) => {
                                 if (err) throw err;
-                                db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, "", hash, (err, results) => {
+                                db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, hash, "", (err, results) => {
                                     if (err) throw err;
                                 });
                             })
