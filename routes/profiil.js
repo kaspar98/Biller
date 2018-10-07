@@ -5,10 +5,14 @@ const{ensureAuthenticated} = require("../helpers/auth");
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
     db.getFriendRequests(req.user[0]["id"], (err, results) => {
-        res.render('profiil', {
-            friendRequests: results
+        if(err) throw err;
+        db.countFriends(req.user[0]["id"], (err1, results1) => {
+            if(err1) throw err;
+            res.render('profiil', {
+                friendRequests: results,
+                totalFriends: results1[0]["COUNT(*)"]
+            });
         });
-
     });
 });
 

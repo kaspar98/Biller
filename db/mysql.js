@@ -81,6 +81,11 @@ function getPayments(uid, cb){
     pool.query(sql, cb);
 }
 
+function countFriends(uid, cb){
+    var sql = "SELECT COUNT(*) FROM Friends WHERE confirmed=1 AND id1='"+uid+"' OR id2='"+uid+"'";
+    pool.query(sql, cb);
+}
+
 function changePaymentStatus(id, status, cb){
     var sql = "CALL sp_changePaymentStatus('"+id+"', '"+status+"')";
     pool.query(sql, cb);
@@ -114,5 +119,6 @@ module.exports = {
     getEmptyEvents,
     changePaymentStatus,
     getUserByGoogleID,
-    getPayments
+    getPayments,
+    countFriends
 };
