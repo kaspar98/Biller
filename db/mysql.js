@@ -75,8 +75,14 @@ function addPayment(toid, fromusername, amountIn, eventid, cb){
     pool.query(sql, cb);
 }
 
+function getPayments(uid, cb){
+    var sql = "SELECT * FROM v_payments, v_users WHERE (idFrom='"+uid+"' OR idTo='"+uid+"')" +
+        "AND (idFrom=v_users.id OR idTo=v_users.id) AND v_users.id <> '"+uid+"' AND confirmed=1";
+    pool.query(sql, cb);
+}
+
 function changePaymentStatus(id, status, cb){
-    var sql = "CALL sp_changePaymentStatus('"+status+"', '"+id+"')";
+    var sql = "CALL sp_changePaymentStatus('"+id+"', '"+status+"')";
     pool.query(sql, cb);
 }
 
@@ -107,5 +113,6 @@ module.exports = {
     getEvents,
     getEmptyEvents,
     changePaymentStatus,
-    getUserByGoogleID
+    getUserByGoogleID,
+    getPayments
 };
