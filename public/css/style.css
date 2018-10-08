@@ -180,19 +180,23 @@ label {
     background-color: #fff;
 }
 
-.navbar a.navbar-logo {
-    font-size: 1.45em;
-    font-family: Poppins;
-    font-weight: 600;
-}
+/*.navbar a.navbar-logo {*/
+    /*font-size: 1.45em;*/
+    /*font-family: Poppins;*/
+    /*font-weight: 600;*/
+/*}*/
 
-.navbar a.navbar-logo:hover {
-    color: #ffffff;
-    text-shadow: 0.1em 0.1em 0.2em #111111;
-}
+/*.navbar a.navbar-logo:hover {*/
+    /*color: #ffffff;*/
+    /*text-shadow: 0.1em 0.1em 0.2em #111111;*/
+/*}*/
 
-.navbar a.navbar-logo:active {
-    color: #aaaaaa;
+/*.navbar a.navbar-logo:active {*/
+    /*color: #aaaaaa;*/
+/*}*/
+
+.logo {
+    height: 2.5em;
 }
 
 .search {
