@@ -1,7 +1,15 @@
 <h1>Bilanss</h1>
+<div class="bilansid">
 {{#each allBalances}}
-<div>
-    <h4>{{firstName}} {{lastName}} ({{username}})</h4>
-    <h4>{{amount}} EUR</h4>
-</div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-content">
+                <h4>{{firstName}} {{lastName}} ({{username}})</h4>
+            </div>
+        </div>
+        <div class="card-content">
+            <h2>{{amount}} EUR</h2>
+        </div>
+    </div>
 {{/each}}
+</div>

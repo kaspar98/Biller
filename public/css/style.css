@@ -79,6 +79,23 @@ button:hover {
     cursor: pointer;
 }
 
+button.accept {
+    background-color: #bcffa6;
+    border: 1px solid #12914a;
+    color: #12914a;
+}
+button.decline {
+    background-color: #ffaea1;
+    border: 1px solid #dd2f38;
+    color: #dd2f38;
+}
+button.accept:hover {
+    background-color: #85f57c;
+}
+button.decline:hover {
+    background-color: #fc9381;
+}
+
 input {
     padding: .4em .75em;
     font-size: 1em;
@@ -151,16 +168,16 @@ label {
 }
 
 .navbar a.navbar-button:hover {
-    color: #333333;
-    background-color: #dddddd;
+    color: #333;
+    background-color: #fff;
     border-radius: 10em;
     box-sizing: border-box;
-    box-shadow: 0.1em 0.1em 0.2em #111111;
+    /*box-shadow: 0.1em 0.1em 0.2em #111111;*/
 }
 
 .navbar a.navbar-button:active {
-    color: #333333;
-    background-color: #aaaaaa;
+    color: #333;
+    background-color: #fff;
 }
 
 .navbar a.navbar-logo {
@@ -232,18 +249,44 @@ label {
 }
 
 /* -- EVENTS -- */
-.event {
+.card {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: .25em;
     margin: 1.4em 0;
 }
-.event > div {
+.card > div {
     /*padding: 0.3em 1.2em;*/
 }
-.event-header {
+.card-header {
     border-bottom: 1px solid #ccc;
 }
-.event-content {
+.card-content {
     margin: 1.2em 1.4em;
+}
+
+/* BILANSS */
+.bilansid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+.bilansid button {
+    width: 100%;
+}
+.bilansid button.accept {
+    margin-bottom: 0.2em;
+}
+
+@media screen and (max-width: 55em) {
+    .bilansid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 45em) {
+    .bilansid {
+        grid-template-columns: 1fr 1fr;
+    }
 }

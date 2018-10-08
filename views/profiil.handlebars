@@ -1,14 +1,24 @@
 <h1>Profiil</h1>
-<h2>Kokku sõpru {{totalFriends}}</h2>
+<h3>Kokku sõpru {{totalFriends}}</h3>
 <h2>Sõbrakutsed</h2>
+<div class="bilansid">
 {{#each friendRequests}}
-<h4>{{firstName}} {{lastName}} ({{username}})</h4>
-<form method="post" action="/profiil/accept">
-    <button type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
-</form>
-<form method="post" action="/profiil/decline">
-    <button type="submit" name="declineRequest" value="{{id}}">Decline request</button>
-</form>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-content">
+                <h4>{{firstName}} {{lastName}} ({{username}})</h4>
+            </div>
+        </div>
+        <div class="card-content">
+            <form method="post" action="/profiil/accept">
+                <button class="accept" type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
+            </form>
+            <form method="post" action="/profiil/decline">
+                <button class="decline" type="submit" name="declineRequest" value="{{id}}">Decline request</button>
+            </form>
+        </div>
+    </div>
 {{else}}
 <h4>Sõbrakutsed puuduvad</h4>
 {{/each}}
+</div>
