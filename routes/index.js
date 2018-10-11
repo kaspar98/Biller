@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/mysql");
 const {ensureAuthenticated} = require("../helpers/auth");
-const script = "../public/scripts/index.js";
+const script = "../scripts/index.js";
 
 router.get('/', function (req, res) {
     var myEvents = [];
@@ -53,7 +53,6 @@ router.get('/', function (req, res) {
             myEvents: myEvents,
             otherEventsConfirmed: otherEventsConfirmed,
             otherEventsUnconfirmed: otherEventsUnconfirmed,
-            script: script
         });
     }
 });
@@ -67,14 +66,22 @@ router.post('/addevent', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/addpayer', ensureAuthenticated, (req, res) => {
-    db.addPayment(req.user[0]["id"], req.body.friendName, req.body.friendPayAmount, req.body.eventIdAddPayer, (err, results) => {
+    db.addPayment(req.user[0]["id"], req.body.friendName, parseFloat(req.body.friendPayAmount), parseInt(req.body.eventIdAddPayer), (err, results) => {
         if (err){
-          req.flash("error_msg", "Ebakorrektne sisend");
-          res.redirect("/");
-
+            if (req.xhr) {
+                res.json({msg: "Database error!", status: 400});
+            } else {
+                req.flash("error_msg", "Ebakorrektne sisend!");
+                res.redirect("/");
+            }
         } else{
-            req.flash("success_msg", "Võlgnik lisatud!");
-            res.redirect("/");
+            if (req.xhr) {
+                res.json({msg: "Võlgnik lisatud!", status: 200});
+            } else{
+                req.flash("success_msg", "Võlgnik lisatud!");
+                res.redirect("/");
+            }
+
         }
     })
 });
