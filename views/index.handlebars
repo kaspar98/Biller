@@ -5,7 +5,7 @@
             <h3>Lisa sündmus</h3>
             <form method="post" action="/addevent">
                 <div class="form-group">
-                    <label>Title</label>
+                    <label>Sündmuse nimi</label>
                     <input type="text" name="title" class="form-control" required>
                 </div>
                 <div class="form-group">
@@ -97,9 +97,28 @@
             <h4>Olen võlgu: {{this.[0].amount}} </h4>
         </div>
     </div>
-</div>
+</div>s
 {{/each}}
 
 {{else}}
-<h1>Welcome</h1>
+<h1><span itemprop="name">Biller</span> - rahaasjad korda vms!</h1>
+<p itemscope="description">
+Biller on veebileht, kus saad mugavalt järge pidada, kui palju oled oma sõpradele laenanud ja neilt endilt laenu võtnud.
+</p>
+<small itemprop="team"><b>Billeri loojad:</b>
+<table>
+    <tr itemprop="person">
+        <td itemprop="name">Kaspar Valk</td>
+        <td itemprop="job">Front- ja back-end</td>
+    </tr>
+    <tr itemprop="person">
+        <td itemprop="name">Erik Martin Vetemaa</td>
+        <td itemprop="job">Front- ja back-end</td>
+    </tr>
+    <tr itemprop="person">
+        <td itemprop="name">Oliver Vainumäe</td>
+        <td itemprop="job">Front- ja back-end</td>
+    </tr>
+</table>
+</small>
 {{/if}}

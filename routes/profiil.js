@@ -4,6 +4,12 @@ const db = require("../db/mysql");
 const{ensureAuthenticated} = require("../helpers/auth");
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
+    res.render('logut', {
+        title: "Sõbrad",
+        description: "See leht on sinu profiili vaatamiseks. Siin näed oma sõpru ja uusi sõbrakutseid.",
+        keywords: "Biller, profiil, sõbrad, sõbrakutsed",
+    });
+
     db.getFriendRequests(req.user[0]["id"], (err, results) => {
         if(err) throw err;
         db.countFriends(req.user[0]["id"], (err1, results1) => {
@@ -19,7 +25,7 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
 router.post('/accept', ensureAuthenticated, (req, res) => {
     db.changeFriendRequestStatus(req.user[0]["id"], req.body.acceptRequest, 1, (err, results) => {
         if (err) throw err;
-        req.flash("success_msg", "Friend request accepted!");
+        req.flash("success_msg", "Sõbrakutse vastu võetud!");
         res.redirect("/profiil");
     });
 });
@@ -27,7 +33,7 @@ router.post('/accept', ensureAuthenticated, (req, res) => {
 router.post('/decline', ensureAuthenticated, (req, res) => {
     db.changeFriendRequestStatus(req.user[0]["id"], req.body.declineRequest, 2, (err, results) => {
         if (err) throw err;
-        req.flash("success_msg", "Friend request declined!");
+        req.flash("success_msg", "Sõbrakutsest keeldutud!");
         res.redirect("/profiil");
     });
 });

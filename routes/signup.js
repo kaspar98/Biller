@@ -4,7 +4,11 @@ const router = express.Router();
 const db = require("../db/mysql");
 
 router.get('/', function (req, res, next) {
-    res.render('signup');
+    res.render('signup', {
+        title: "Registreeru",
+        description: "See leht on registeerumieks. Siin saad sisestada oma andmed ja oledki Billeri perekonna liige :-).",
+        keywords: "Biller, registreeru, konto, nimi, parool, email",
+    });
 });
 
 router.post('/', (req, res) => {
@@ -22,38 +26,38 @@ router.post('/', (req, res) => {
     let errors = [];
 
     if (req.body.password != req.body.password2) {
-        errors.push({text: "Passwords do not match"});
+        errors.push({text: "Paroolid ei kattu"});
     }
 
     if (req.body.password.length < 4) {
-        errors.push({text: "Password must be at least 4 chars"});
+        errors.push({text: "Parool peab olema vähemalt 4 tähemärki pikk"});
     }
 
     if (!req.body.firstName) {
-        errors.push({text: 'Please add a first name'});
+        errors.push({text: 'Palun lisa eesnimi'});
     }
 
     if (!req.body.lastName) {
-        errors.push({text: 'Please add a last name'});
+        errors.push({text: 'Palun lisa perekonnanimi'});
     }
  // Email check
     db.getUserByEmail(req.body.email, (err, results) => {
         if (err) throw err;
         if (results.length) {
-            errors.push({text: "Email taken"});
+            errors.push({text: "See email on juba võetud"});
             reRender();
         } else {
             // Username taken check
             db.getUserByUsername(req.body.username, (err1, results1) => {
                 if (err1) throw err1;
                 if (results1.length) {
-                    errors.push({text: "Username taken"});
+                    errors.push({text: "See kasutajanimi on juba võetud"});
                     reRender();
                 }
                 else {
                     if (errors.length > 0) {
                         reRender();
-                        errors.push({text: "Unknown error!"});
+                        errors.push({text: "Tundmatu error!"});
                     } else {
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -63,7 +67,7 @@ router.post('/', (req, res) => {
                                 });
                             })
                         });
-                        req.flash("success_msg", "You are now registered!");
+                        req.flash("success_msg", "Oled nüüd registreeritud!");
                         res.redirect("/login");
                     }
                 }

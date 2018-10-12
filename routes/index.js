@@ -41,6 +41,10 @@ router.get('/', function (req, res) {
                     myEvents[results1[i]["eventId"]].push(results1[i]);
                 }
                 res.render('index', {
+                    title: "Biller - rahaasjad korda!",
+                    description: "See on sinu avaleht. Sisselogitult saad luua uusi sündmusi, vaadata kinnitamata" +
+                        " sündmusi, enda loodud sündmusi ja kinnitatud sündmusi.",
+                    keywords: "Biller, avaleht, uus sündmus, kinnita, sündmus, raha, võlg, uus",
                     myEvents: myEvents,
                     otherEventsConfirmed: otherEventsConfirmed,
                     otherEventsUnconfirmed: otherEventsUnconfirmed,
@@ -50,6 +54,10 @@ router.get('/', function (req, res) {
         });
     } else {
         res.render('index', {
+            title: "Biller - rahaasjad korda!",
+            description: "See on sinu avaleht. Sisselogitult saad luua uusi sündmusi, vaadata kinnitamata" +
+                " sündmusi, enda loodud sündmusi ja kinnitatud sündmusi.",
+            keywords: "Biller, avaleht, uus sündmus, kinnita, sündmus, raha, võlg, uus",
             myEvents: myEvents,
             otherEventsConfirmed: otherEventsConfirmed,
             otherEventsUnconfirmed: otherEventsUnconfirmed,
@@ -89,7 +97,7 @@ router.post('/addpayer', ensureAuthenticated, (req, res) => {
 router.post('/confirm', ensureAuthenticated, (req, res) => {
     db.changePaymentStatus(req.body.confirmPayment, 1, (err, results) => {
         if (err) throw err;
-        req.flash("success_msg", "Payment confirmed!");
+        req.flash("success_msg", "Makse kinnitatud!");
         res.redirect("/");
     })
 });
@@ -97,7 +105,7 @@ router.post('/confirm', ensureAuthenticated, (req, res) => {
 router.post('/decline', ensureAuthenticated, (req, res) => {
     db.changePaymentStatus(req.body.declinePayment, 2, (err, results) => {
         if (err) throw err;
-        req.flash("success_msg", "Payment declined!");
+        req.flash("success_msg", "Maksest keeldutud!");
         res.redirect("/");
     })
 });

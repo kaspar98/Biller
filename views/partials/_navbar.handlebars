@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-items">
             <div class="navbar-left">
-                <a class="navbar-logo" href="/">
+                <a itemprop="url" class="navbar-logo" href="/" alt="avalehele">
                     <svg class="logo" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1612 1024">
                         <path fill="#fff" d="M348.371 548.948c17.595 21.113 24.632 45.746 24.632 73.897 0 38.708-14.076 70.378-38.708 91.491s-63.34 35.189-112.605 35.189h-197.058v-464.495h193.54c45.746 0 80.935 10.557 105.567 31.67s38.708 49.265 38.708 84.454c0 28.151-7.038 52.784-21.113 70.378s-35.189 31.67-59.821 35.189c28.151 7.038 49.265 21.113 66.859 42.227zM116.124 478.57h84.454c24.632 0 42.227-3.519 52.784-14.076s17.595-24.632 17.595-45.746c0-17.595-7.038-35.189-17.595-45.746s-28.151-14.076-52.784-14.076h-84.454v119.643zM260.399 658.034c14.076-10.557 21.113-24.632 21.113-45.746s-7.038-35.189-21.113-45.746c-14.076-10.557-31.67-17.595-56.302-17.595h-87.973v126.68h87.973c24.632-3.519 42.227-7.038 56.302-17.595z"></path>
                         <path fill="#fff" d="M443.381 246.323c10.557-10.557 24.632-14.076 42.227-14.076s31.67 3.519 42.227 14.076c10.557 10.557 14.076 21.113 14.076 35.189s-3.519 24.632-14.076 35.189c-10.557 10.557-24.632 14.076-42.227 14.076s-31.67-3.519-42.227-14.076c-10.557-10.557-14.076-21.113-14.076-35.189-3.519-14.076 3.519-24.632 14.076-35.189zM527.835 387.079v362.447h-91.491v-362.447h91.491z"></path>
@@ -16,23 +16,23 @@
                         <path fill="#fff" d="M190.021 717.856h59.821v98.529h-59.821v-98.529z"></path>
                     </svg>
                 </a>
-                <a class="navbar-button" href="/">Avaleht</a>
-                <a class="navbar-button" href="/Bilanss">Bilanss</a>
-                <a class="navbar-button" href="/Profiil">Profiil</a>
+                <a itemprop="url" class="navbar-button" href="/" alt="avalehele">Avaleht</a>
+                <a itemprop="url" class="navbar-button" href="/Bilanss" alt="bilanss lehele">Bilanss</a>
+                <a itemprop="url" class="navbar-button" href="/Profiil" alt="profiililehele">Profiil</a>
             </div>
 
             <div></div>
 
             <div class="navbar-right">
-                <form method="post" action="/add" class="search">
+                <form itemprop="search" method="post" action="/add" class="search">
                     <input type="search" placeholder="Sõbra nimi" name="findName">
-                    <button type="submit">Otsi</button>
+                    <button type="submit" alt="otsi sõpra">Otsi</button>
                 </form>
                 {{#if user}}
-                <a class="navbar-button" href="/logout">Logi välja</a>
+                <a itemprop="url" rel="nofollow" class="navbar-button" href="/logout" alt="logi välja">Logi välja</a>
                 {{else}}
-                <a class="navbar-button" href="/login">Logi sisse</a>
-                <a class="navbar-button" href="/signup">Registreeru</a>
+                <a itemprop="url" rel="nofollow" class="navbar-button" href="/login" alt="logi sisse lehele">Logi sisse</a>
+                <a itemprop="url" rel="nofollow" class="navbar-button" href="/signup" alt="registreerumise lehele">Registreeru</a>
                 {{/if}}
             </div>
         </div>

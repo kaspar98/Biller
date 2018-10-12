@@ -23,6 +23,9 @@ router.get('/', ensureAuthenticated, function(req, res, next) {
             }
         }
         res.render('bilanss', {
+            title: "Bilanss",
+            description: "See leht on sinu bilansi jälgimiseks. Siin on eraldi kõikide sinu sõprade võlgade kogused.",
+            keywords: "Biller, bilanss, võlad, võlg, raha, staatus, sõbrad",
             allBalances: balances
         });
     })

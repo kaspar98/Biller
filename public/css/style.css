@@ -106,6 +106,13 @@ label {
     margin-bottom: 0.6em;
 }
 
+table {
+    border-spacing: 0;
+}
+td {
+    padding-right: 2.3em;
+}
+
 /* NAVBAR */
 .navbar {
     background-color: #333;
@@ -251,6 +258,15 @@ label {
     border: 1px solid #ff6164;
     color: #d02a3d;
 }
+
+a.google {
+    border-radius: 0.25em;
+    background-color: #ea4336;
+    padding: 0.4em 0.9em;
+    color: #fff;
+    text-decoration: none;
+}
+
 
 /* -- EVENTS -- */
 .card {

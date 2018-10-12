@@ -23,7 +23,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
 router.post('/added', ensureAuthenticated, (req, res) => {
     db.addFriend(req.user[0]["id"], req.body.addFriend, (err, results) => {
         if (err) throw err;
-        req.flash("success_msg", "Friend request sent!");
+        req.flash("success_msg", "Sõbrakutse saadetud!");
         res.redirect("/");
     });
 });
