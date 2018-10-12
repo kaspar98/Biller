@@ -4,17 +4,14 @@ const db = require("../db/mysql");
 const{ensureAuthenticated} = require("../helpers/auth");
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
-    res.render('logut', {
-        title: "Sõbrad",
-        description: "See leht on sinu profiili vaatamiseks. Siin näed oma sõpru ja uusi sõbrakutseid.",
-        keywords: "Biller, profiil, sõbrad, sõbrakutsed",
-    });
-
     db.getFriendRequests(req.user[0]["id"], (err, results) => {
         if(err) throw err;
         db.countFriends(req.user[0]["id"], (err1, results1) => {
             if(err1) throw err;
             res.render('profiil', {
+                title: "Sõbrad",
+                description: "See leht on sinu profiili vaatamiseks. Siin näed oma sõpru ja uusi sõbrakutseid.",
+                keywords: "Biller, profiil, sõbrad, sõbrakutsed",
                 friendRequests: results,
                 totalFriends: results1[0]["COUNT(*)"]
             });
