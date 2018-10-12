@@ -45,8 +45,8 @@ function getFriendRequests(uid, cb){
 }
 
 function getFriends(uid, cb){
-    pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE id1='"+uid+"' OR id2='"+uid+"'" +
-        " AND confirmed=1 AND id<>'"+uid+"' ", cb);
+    pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE (id1='"+uid+"' OR id2='"+uid+"') " +
+        "AND confirmed=1 AND id<>'"+uid+"' AND (id1=id OR id2=id)", cb);
 }
 
 function changeFriendRequestStatus(uid, fid, status, cb){
@@ -82,7 +82,7 @@ function getPayments(uid, cb){
 }
 
 function countFriends(uid, cb){
-    var sql = "SELECT COUNT(*) FROM Friends WHERE confirmed=1 AND id1='"+uid+"' OR id2='"+uid+"'";
+    var sql = "SELECT COUNT(*) FROM Friends WHERE confirmed=1 AND (id1='"+uid+"' OR id2='"+uid+"')";
     pool.query(sql, cb);
 }
 
