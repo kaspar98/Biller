@@ -22,6 +22,7 @@ const profiilRouter = require('./routes/profiil');
 const signUpRouter = require('./routes/signup');
 const logoutRouter = require('./routes/logout');
 const addRouter = require('./routes/add');
+const testRouter = require('./routes/test');
 
 // Handlebars Middleware
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -67,6 +68,7 @@ app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
 app.use('/logout', logoutRouter);
 app.use('/add', addRouter);
+app.use('/test', testRouter);
 
 db.init();
 
