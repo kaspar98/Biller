@@ -66,7 +66,7 @@ a:hover {
 button {
     color: #fff;
     background-color: #444;
-    border: none;
+    border: 1px solid #222;
     text-align: center;
     vertical-align: middle;
     padding: .6rem .75rem;
@@ -75,7 +75,7 @@ button {
 }
 
 button:hover {
-    background-color: #222;
+    background-color: #333;
     cursor: pointer;
 }
 
@@ -260,11 +260,19 @@ td {
 }
 
 a.google {
-    border-radius: 0.25em;
     background-color: #ea4336;
-    padding: 0.4em 0.9em;
+    border: 1px solid #af2c2a;
     color: #fff;
     text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    padding: .5rem .65rem;
+    border-radius: .25rem;
+    font-size: 1em;
+}
+
+a.google:hover {
+    background-color: #d6342f;
 }
 
 
@@ -309,4 +317,21 @@ a.google {
     .bilansid {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+/* TEST */
+.testorginal {
+    margin-top: 0.5em;
+    width: 2em;
+    height: 2em;
+    background-color: #ffaea1;
+    border: 1px solid #dd2f38;
+    transition: all 0.8s ease 0s;
+    border-radius: .25rem;
+}
+.testchange {
+    /*display: none;*/
+    background-color: #bcffa6;
+    border: 1px solid #12914a;
+    width: 20em !important;
 }
