@@ -24,3 +24,12 @@
 </div>
 <button id="findAllFriends">Leia kõik minu sõbrad</button>
 <div id="users"></div>
+<form method="post" enctype="multipart/form-data" action="/profiil/upload">
+    <input id="avatar" type="file" name="avatar">
+    <input type="submit" value="Lisa profiilipilt">
+</form>
+<img src="/img/{{picId}}.png" height="100" width="100"/>
+
+<form method="post" action="/profiil/remove">
+    <input type="submit" value="Eemalda profiilipilt">
+</form>

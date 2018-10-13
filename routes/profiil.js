@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require("../db/mysql");
 const {ensureAuthenticated} = require("../helpers/auth");
+const path = require("path");
+const fs = require("fs");
 const script = "../scripts/profiil.js";
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
@@ -15,7 +17,8 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
                 keywords: "Biller, profiil, sõbrad, sõbrakutsed",
                 friendRequests: results,
                 totalFriends: results1[0]["COUNT(*)"],
-                script: script
+                script: script,
+                picId: req.user[0]["id"]
             });
         });
     });
@@ -24,7 +27,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 router.get('/allfriends', ensureAuthenticated, function (req, res, next) {
     db.getFriends(req.user[0]["id"], (err, results) => {
         if (err) throw err;
-        res.json({friends:results, msg: "Sõbrad leitud!", status: 200});
+        res.json({friends: results, msg: "Sõbrad leitud!", status: 200});
     });
 });
 
@@ -43,6 +46,36 @@ router.post('/decline', ensureAuthenticated, (req, res) => {
         req.flash("success_msg", "Sõbrakutsest keeldutud!");
         res.redirect("/profiil");
     });
+});
+
+router.post("/upload", ensureAuthenticated, (req, res) => {
+    if (!req.files.avatar) {
+        req.flash("error_msg", "Lisa fail!");
+        res.redirect("/profiil");
+    } else {
+        var file = req.files.avatar;
+        if (file.mimetype != "image/png" && file.mimetype != "image/jpeg") {
+            req.flash("error_msg", "Vale failitüüp!");
+            res.redirect("/profiil");
+        } else {
+            file.mv(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'), function (err) {
+                if (err) throw err;
+                req.flash("success_msg", "Pilt laetud!");
+                res.redirect("/profiil");
+            });
+        }
+    }
+});
+
+router.post("/remove", ensureAuthenticated, (req, res) => {
+    if(fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))){
+        fs.unlinkSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'));
+        req.flash("success_msg", "Pilt eemaldatud!");
+        res.redirect("/profiil");
+    } else{
+        req.flash("error_msg", "Pole midagi eemaldada!");
+        res.redirect("/profiil");
+    }
 });
 
 module.exports = router;
