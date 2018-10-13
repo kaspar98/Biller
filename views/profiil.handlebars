@@ -28,8 +28,9 @@
     <input id="avatar" type="file" name="avatar">
     <input type="submit" value="Lisa profiilipilt">
 </form>
-<img src="/img/{{picId}}.png" height="100" width="100"/>
-
+{{#each picId}}
+<img src="/img/{{this}}.png" height="100" width="100"/>
+{{/each}}
 <form method="post" action="/profiil/remove">
     <input type="submit" value="Eemalda profiilipilt">
 </form>

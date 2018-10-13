@@ -11,6 +11,10 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
         if (err) throw err;
         db.countFriends(req.user[0]["id"], (err1, results1) => {
             if (err1) throw err;
+            var picId = "";
+            if (fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))) {
+                picId = [req.user[0]["id"]]
+            }
             res.render('profiil', {
                 title: "Sõbrad",
                 description: "See leht on sinu profiili vaatamiseks. Siin näed oma sõpru ja uusi sõbrakutseid.",
@@ -18,7 +22,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
                 friendRequests: results,
                 totalFriends: results1[0]["COUNT(*)"],
                 script: script,
-                picId: req.user[0]["id"]
+                picId: picId
             });
         });
     });
@@ -68,11 +72,11 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
 });
 
 router.post("/remove", ensureAuthenticated, (req, res) => {
-    if(fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))){
+    if (fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))) {
         fs.unlinkSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'));
         req.flash("success_msg", "Pilt eemaldatud!");
         res.redirect("/profiil");
-    } else{
+    } else {
         req.flash("error_msg", "Pole midagi eemaldada!");
         res.redirect("/profiil");
     }
