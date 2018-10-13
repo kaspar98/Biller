@@ -67,25 +67,39 @@ router.get('/', function (req, res) {
 
 router.post('/addevent', ensureAuthenticated, (req, res) => {
     db.addEvent(req.body.title, req.body.eventDescription, req.user[0]["id"], (err, results) => {
-        if (err) throw err;
-        req.flash("success_msg", "Event made!");
-        res.redirect("/");
+        if (req.xhr || req.headers["content-type"] == 'application/json') {
+            if (err) {
+                res.send(JSON.stringify({msg: "Ühendus ebaõnnestus! Proovime hiljem uuesti", status: 400}));
+            } else {
+                res.send(JSON.stringify({msg: "Sündmus tehtud!", status: 200}));
+            }
+        } else {
+            if (err) {
+                req.flash("error_msg", "Ilmus viga!");
+                res.redirect("/");
+
+            } else {
+                req.flash("success_msg", "Sündmus tehtud!");
+                res.redirect("/");
+            }
+        }
     })
 });
 
 router.post('/addpayer', ensureAuthenticated, (req, res) => {
-    db.addPayment(req.user[0]["id"], req.body.friendName, parseFloat(req.body.friendPayAmount), parseInt(req.body.eventIdAddPayer), (err, results) => {
-        if (err){
-            if (req.xhr) {
-                res.json({msg: "Database error!", status: 400});
+    db.addPayment(req.user[0]["id"], String(req.body.friendName), req.body.friendPayAmount, req.body.eventIdAddPayer, (err, results) => {
+        if (err) {
+            console.log(err);
+            if (req.xhr || req.headers["content-type"] == 'application/json') {
+                res.send(JSON.stringify({msg: "Database error!", status: 400}));
             } else {
                 req.flash("error_msg", "Ebakorrektne sisend!");
                 res.redirect("/");
             }
-        } else{
-            if (req.xhr) {
-                res.json({msg: "Võlgnik lisatud!", status: 200});
-            } else{
+        } else {
+            if (req.xhr || req.headers["content-type"] == 'application/json') {
+                res.send(JSON.stringify({msg: "Võlgnik lisatud!", status: 200}));
+            } else {
                 req.flash("success_msg", "Võlgnik lisatud!");
                 res.redirect("/");
             }
