@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const db = require("../db/mysql");
+const nodemailer = require("nodemailer");
 
 router.get('/', function (req, res, next) {
     res.render('signup', {
@@ -66,6 +67,26 @@ router.post('/', (req, res) => {
                                     if (err) throw err;
                                 });
                             })
+                        });
+                        var transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            auth: {
+                                user: process.env.EMAIL,
+                                pass: process.env.EMAIL_PASS
+                            }
+                        });
+
+                        var mailOptions = {
+                            from: process.env.EMAIL,
+                            to: req.body.email,
+                            subject: 'Biller account!',
+                            text: 'Your Biller account username is ' + req.body.username
+                        };
+
+                        transporter.sendMail(mailOptions, function(error, info){
+                            if (error) {
+                                console.log(error);
+                            }
                         });
                         req.flash("success_msg", "Oled nüüd registreeritud!");
                         res.redirect("/login");
