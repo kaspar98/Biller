@@ -2,13 +2,13 @@
 
 <hr>
 
-<h3>Sõbrakutsed</h3>
+<h2>Sõbrakutsed</h2>
 <div class="bilansid">
     {{#each friendRequests}}
         <div class="card">
             <div class="card-header">
                 <div class="card-content">
-                    <h4>{{firstName}} {{lastName}} ({{username}})</h4>
+                    <h3>{{firstName}} {{lastName}} ({{username}})</h3>
                 </div>
             </div>
             <div class="card-content">
@@ -21,24 +21,24 @@
             </div>
         </div>
     {{else}}
-        <h4>Sõbrakutsed puuduvad</h4>
+        <h3>Sõbrakutsed puuduvad</h3>
     {{/each}}
 </div>
 
 <hr>
 
-<h3>Sõprade arv: {{totalFriends}}</h3>
+<h2>Sõprade arv: {{totalFriends}}</h2>
 <button id="findAllFriends">Vaata oma sõpru</button>
 <div id="users"></div>
 
 <hr>
 
-<h3>Profiilipilt</h3>
+<h2>Profiilipilt</h2>
 <div class="card profile-image">
     <div class="card-header">
         <div class="image-box">
             {{#each picId}}
-                <img src="" id="pfp" data-src="{{this}}" height="200" width="200">
+                <img src="" id="pfp" data-src="{{this}}" height="200" width="200" alt="profile picture">
             {{/each}}
         </div>
     </div>

@@ -2,34 +2,34 @@
 
 <hr>
 
-<p>Enim kasutatud brauser külastajate seas: <b>{{mostUsedBrowser}}</b> <br>
-Enim kasutatud OP-süsteem külastajate seas: <b>{{mostUsedOS}}</b></p>
+<p>Enim kasutatud brauser külastajate seas: <strong>{{mostUsedBrowser}}</strong> <br>
+Enim kasutatud OP-süsteem külastajate seas: <strong>{{mostUsedOS}}</strong></p>
 
 <hr>
 
-<h3>Saabumislehed (landing pages)</h3>
+<h2>Saabumislehed (landing pages)</h2>
 <table>
     {{#each landingPages}}
     <tr>
         <th>{{@key}}: </th>
-        <th><b>{{this}}</b></th>
+        <th><strong>{{this}}</strong></th>
     </tr>
     {{/each}}
 </table>
 
 <hr>
 
-<h3>Külastamise populaarsus kellaajati tulpdiagrammina</h3>
+<h2>Külastamise populaarsus kellaajati tulpdiagrammina</h2>
 <div id="hoursChart"></div>
 
 <hr>
 
-<h3>Külastamise populaarsus kellaajati tabelina</h3>
+<h2>Külastamise populaarsus kellaajati tabelina</h2>
 <table>
     {{#each hours}}
     <tr>
         <th>{{@key}}: </th>
-        <th id="{{@key}}"><b>{{this}}</b></th>
+        <th id="{{@key}}"><strong>{{this}}</strong></th>
     </tr>
     {{/each}}
 </table>
