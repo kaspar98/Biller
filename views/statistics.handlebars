@@ -1,27 +1,35 @@
 <h1>Statistika</h1>
 
-<h4>Enim kasutatud brauser külastajate seas: {{mostUsedBrowser}}</h4>
-<h4>Enim kasutatud OP-süsteem külastajate seas: {{mostUsedOS}}</h4>
+<hr>
 
-<h2>Saabumislehed (landing pages)</h2>
+<p>Enim kasutatud brauser külastajate seas: <b>{{mostUsedBrowser}}</b> <br>
+Enim kasutatud OP-süsteem külastajate seas: <b>{{mostUsedOS}}</b></p>
+
+<hr>
+
+<h3>Saabumislehed (landing pages)</h3>
 <table>
     {{#each landingPages}}
     <tr>
-        <th>{{@key}}</th>
-        <th>{{this}}</th>
+        <th>{{@key}}: </th>
+        <th><b>{{this}}</b></th>
     </tr>
     {{/each}}
 </table>
 
-<h2>Külastamise populaarsus kellaajati tulpdiagrammina</h2>
+<hr>
+
+<h3>Külastamise populaarsus kellaajati tulpdiagrammina</h3>
 <div id="hoursChart"></div>
 
-<h2>Külastamise populaarsus kellaajati tabelina</h2>
+<hr>
+
+<h3>Külastamise populaarsus kellaajati tabelina</h3>
 <table>
     {{#each hours}}
     <tr>
-        <th>{{@key}}</th>
-        <th id="{{@key}}">{{this}}</th>
+        <th>{{@key}}: </th>
+        <th id="{{@key}}"><b>{{this}}</b></th>
     </tr>
     {{/each}}
 </table>

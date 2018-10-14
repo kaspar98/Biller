@@ -1,25 +1,23 @@
 {{#if user}}
-<div>
-    <div class="card">
-        <div class="card-content">
-            <h3>Lisa sündmus</h3>
-            <form id="addEventForm" method="post" action="/addevent">
-                <div class="form-group">
-                    <label>Sündmuse nimi</label>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Sündmuse kirjeldus</label>
-                    <textarea class="form-control" name="eventDescription" required></textarea>
-                </div>
-                <button type="submit">Lisa</button>
-            </form>
-        </div>
+<div class="card">
+    <div class="card-content">
+        <h3>Lisa uus sündmus</h3>
+        <form id="addEventForm" method="post" action="/addevent">
+            <div class="form-group">
+                <label>Sündmuse nimi</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Sündmuse kirjeldus</label>
+                <textarea class="form-control" name="eventDescription" required></textarea>
+            </div>
+            <button type="submit">Lisa sündmus</button>
+        </form>
     </div>
 </div>
 
 <!-- Sündmused, kuhu kasutaja on kaasatud ja on unconfirmed -->
-<h2>Kinnitamata sündmused:</h2>
+<h2 class="category">Kinnitamata sündmused:</h2>
 {{#each otherEventsUnconfirmed}}
 <div class="card">
     <div class="card-header">
@@ -30,7 +28,7 @@
     <div class="card-body">
         <div class="card-content">
             <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-            <p>{{this.[0].description}}</p>
+            <p class="description">Kirjeldus: {{this.[0].description}}</p>
             <h4>Olen võlgu: {{this.[0].amount}} </h4>
             <form method="post" action="/confirm">
                 <button class="accept" type="submit" name="confirmPayment" value="{{this.[0].paymentId}}">Kinnita nõue!</button>
@@ -44,7 +42,7 @@
 {{/each}}
 
 <!-- Sündmused, mille omanik kasutaja on -->
-<h2>Minu sündmused:</h2>
+<h2 class="category">Minu loodud sündmused:</h2>
 
 {{#each myEvents}}
 <div class="card">
@@ -56,25 +54,29 @@
     <div class="card-body">
         <div class="card-content">
             <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-            <p>{{this.[0].description}}</p>
+            <p class="description">Kirjeldus: {{this.[0].description}}</p>
             <h4>Võlgnikud: </h4>
+            <p>
             {{#each this}}
-            <div>
-                <p>{{payerFName}} {{payerLName}} {{amount}}</p>
-            </div>
+                {{payerFName}} {{payerLName}} {{amount}} <br>
             {{/each}}
+            </p>
             <form class="addPayerForm" method="post" action="/addpayer">
-                <div class="form-group">
-                    <label>Võlgniku kasutajanimi</label>
-                    <input type="text" name="friendName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Summa</label>
-                    <input type="text" name="friendPayAmount" class="form-control" required>
+                <h4>Lisa võlgnikke:</h4>
+                <div class="new-lender">
+                    <div class="form-group">
+                        <label>Võlgniku kasutajanimi</label>
+                        <input type="text" name="friendName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Summa</label>
+                        <input type="text" name="friendPayAmount" class="form-control" required>
+                    </div>
+
                 </div>
                 <input type="hidden" name="eventIdAddPayer" value={{this.[0].eventId}} class="form-control"
                        required>
-                <button class="addPayerButton" type="submit">Lisa</button>
+                <button class="addPayerButton" type="submit">Lisa võlgnik</button>
             </form>
         </div>
     </div>
@@ -82,7 +84,7 @@
 {{/each}}
 
 <!-- Sündmused, kuhu kasutaja on kaasatud ja on confirmed -->
-<h2>Kinnitatud sündmused:</h2>
+<h2 class="category">Kinnitatud sündmused:</h2>
 {{#each otherEventsConfirmed}}
 <div class="card">
     <div class="card-header">
@@ -93,7 +95,7 @@
     <div class="card-body">
         <div class="card-content">
             <h4>Looja: {{this.[0].receiverFName}} {{this.[0].receiverLName}}</h4>
-            <p>{{this.[0].description}}</p>
+            <p class="description">Kirjeldus: {{this.[0].description}}</p>
             <h4>Olen võlgu: {{this.[0].amount}} </h4>
         </div>
     </div>

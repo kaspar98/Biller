@@ -15,6 +15,9 @@ router.post('/', ensureAuthenticated, (req, res) => {
             }
         }
         res.render('add', {
+            title: "Otsing",
+            description: "Sellel lehel saad otsida ja lisada sõpru",
+            keywords: "Biller, sõbrad, otsi, lisa",
             userFound: results
         });
 
