@@ -336,8 +336,14 @@ a.google:hover {
     width: 20em !important;
 }
 
+#googleMap {
+    width: 100%;
+    height: 400px;
+}
+
 /* STATISTICS */
 #hoursChart {
     height: 20em;
     width: 100%;
 }
+
