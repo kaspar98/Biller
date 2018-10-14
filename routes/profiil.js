@@ -14,8 +14,6 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
             var picId = "";
             if (fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))) {
                 picId = [req.user[0]["id"]]
-            } else {
-                picId = "profile";
             }
             res.render('profiil', {
                 title: "Sõbrad",
