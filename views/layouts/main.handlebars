@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <title>{{title}}</title>
-    <meta name="description" content={{description}}>
-    <meta name="keywords" content={{keywords}}>
+    <meta name="description" content='{{description}}'>
+    <meta name="keywords" content='{{keywords}}'>
 </head>
 <body>
 {{> _navbar}}
@@ -32,7 +32,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 {{#each script}}
-<script src="{{this}}"></script>
+    <script src="{{this}}"></script>
 {{/each}}
 </body>
 </html>
