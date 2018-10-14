@@ -2,35 +2,38 @@
 <h3>Kokku sõpru {{totalFriends}}</h3>
 <h2>Sõbrakutsed</h2>
 <div class="bilansid">
-{{#each friendRequests}}
-    <div class="card">
-        <div class="card-header">
+    {{#each friendRequests}}
+        <div class="card">
+            <div class="card-header">
+                <div class="card-content">
+                    <h4>{{firstName}} {{lastName}} ({{username}})</h4>
+                </div>
+            </div>
             <div class="card-content">
-                <h4>{{firstName}} {{lastName}} ({{username}})</h4>
+                <form method="post" action="/profiil/accept">
+                    <button class="accept" type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
+                </form>
+                <form method="post" action="/profiil/decline">
+                    <button class="decline" type="submit" name="declineRequest" value="{{id}}">Decline request</button>
+                </form>
             </div>
         </div>
-        <div class="card-content">
-            <form method="post" action="/profiil/accept">
-                <button class="accept" type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
-            </form>
-            <form method="post" action="/profiil/decline">
-                <button class="decline" type="submit" name="declineRequest" value="{{id}}">Decline request</button>
-            </form>
-        </div>
-    </div>
-{{else}}
-<h4>Sõbrakutsed puuduvad</h4>
-{{/each}}
+    {{else}}
+        <h4>Sõbrakutsed puuduvad</h4>
+    {{/each}}
 </div>
 <button id="findAllFriends">Leia kõik minu sõbrad</button>
 <div id="users"></div>
-<form method="post" enctype="multipart/form-data" action="/profiil/upload">
-    <input id="avatar" type="file" name="avatar">
-    <input type="submit" value="Lisa profiilipilt">
-</form>
-{{#each picId}}
-<img src="/img/{{this}}.png" height="100" width="100"/>
-{{/each}}
-<form method="post" action="/profiil/remove">
-    <input type="submit" value="Eemalda profiilipilt">
-</form>
+<div>
+    {{#each picId}}
+        <img src="" id="pfp" data-src="{{this}}" height="100" width="100">
+    {{/each}}
+
+    <form method="post" enctype="multipart/form-data" action="/profiil/upload">
+        <input id="avatar" type="file" name="avatar">
+        <input type="submit" value="Lisa profiilipilt">
+    </form>
+    <form method="post" action="/profiil/remove">
+        <input type="submit" value="Eemalda profiilipilt">
+    </form>
+</div>

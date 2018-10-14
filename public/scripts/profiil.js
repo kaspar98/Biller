@@ -11,7 +11,7 @@ function loadUsers() {
             var output = '';
             for (var i in users) {
                 output += '<ul>' +
-                    '<li>' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].username + ')' +  '</li>' +
+                    '<li>' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].username + ')' + '</li>' +
                     '</ul>';
             }
             document.location.hash = "allfriends";
@@ -41,10 +41,15 @@ checkHash();
 
 
 // BACK BUTTON FIX
-window.onhashchange = function() {
-    if(!document.location.hash){
+window.onhashchange = function () {
+    if (!document.location.hash) {
         history.back();
-    } else{
+    } else {
         history.forward();
     }
 };
+
+window.addEventListener("load", function () {
+    var pfp = document.getElementById("pfp");
+    pfp.setAttribute("src", '/img/' + pfp.getAttribute("data-src") + '.png');
+}, false);
