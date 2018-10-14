@@ -32,8 +32,8 @@ function getUserByEmail(email, cb) {
 
 function getUserByName(firstName, lastName, uid, cb) {
     // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
-    pool.query("SELECT DISTINCT firstName, lastName, id, username FROM v_users, v_friends WHERE NOT id1='"+uid+"' AND NOT id2='"+uid+"'" +
-        " AND firstName='" + firstName + "' AND lastName='" + lastName + "'", cb);
+    pool.query("SELECT firstName, lastName, v_users.id, username FROM v_users WHERE NOT EXISTS (SELECT * FROM v_friends " +
+        "WHERE (id1=v_users.id AND id2='"+uid+"') OR (id1='"+uid+"' AND id2=v_users.id))", cb);
 }
 
 function getUserByGoogleID(googleID, cb) {
