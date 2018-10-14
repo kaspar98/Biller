@@ -8,6 +8,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     let last = jupid[jupid.length - 1];
     let first = jupid.join(" ").replace(" " + last, "");
     db.getUserByName(first, last, req.user[0]["id"], (err, results) => {
+        if (err) throw err;
         for (i = 0; i < results.length; i++) {
             if(results[i]["id"] == req.user[0]["id"]){
                 results.splice(i, 1);
@@ -18,6 +19,10 @@ router.post('/', ensureAuthenticated, (req, res) => {
         });
 
     })
+});
+
+router.get('/', ensureAuthenticated, (req, res) => {
+    res.render('add');
 });
 
 router.post('/added', ensureAuthenticated, (req, res) => {
