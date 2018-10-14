@@ -26,7 +26,8 @@ script.onload = function() {
             title: 'Ohekatku'
         });
 
-}
+    }
+};
 
 script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBga0VE2nivvRnW_v2-I7dbxafd3HDNy2c&callback=myMap";
-document.getElementsByTagName('head')[0].appendChild(script)
+document.getElementsByTagName('head')[0].appendChild(script);
