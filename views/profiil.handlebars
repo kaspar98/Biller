@@ -1,6 +1,8 @@
 <h1>Profiil</h1>
-<h3>Kokku sõpru {{totalFriends}}</h3>
-<h2>Sõbrakutsed</h2>
+
+<hr>
+
+<h3>Sõbrakutsed</h3>
 <div class="bilansid">
     {{#each friendRequests}}
         <div class="card">
@@ -11,10 +13,10 @@
             </div>
             <div class="card-content">
                 <form method="post" action="/profiil/accept">
-                    <button class="accept" type="submit" name="acceptRequest" value="{{id}}">Accept request</button>
+                    <button class="accept" type="submit" name="acceptRequest" value="{{id}}">Nõustu</button>
                 </form>
                 <form method="post" action="/profiil/decline">
-                    <button class="decline" type="submit" name="declineRequest" value="{{id}}">Decline request</button>
+                    <button class="decline" type="submit" name="declineRequest" value="{{id}}">Keeldu</button>
                 </form>
             </div>
         </div>
@@ -22,18 +24,34 @@
         <h4>Sõbrakutsed puuduvad</h4>
     {{/each}}
 </div>
-<button id="findAllFriends">Leia kõik minu sõbrad</button>
-<div id="users"></div>
-<div>
-    {{#each picId}}
-        <img src="" id="pfp" data-src="{{this}}" height="100" width="100">
-    {{/each}}
 
-    <form method="post" enctype="multipart/form-data" action="/profiil/upload">
-        <input id="avatar" type="file" name="avatar">
-        <input type="submit" value="Lisa profiilipilt">
-    </form>
-    <form method="post" action="/profiil/remove">
-        <input type="submit" value="Eemalda profiilipilt">
-    </form>
+<hr>
+
+<h3>Sõprade arv: {{totalFriends}}</h3>
+<button id="findAllFriends">Vaata oma sõpru</button>
+<div id="users"></div>
+
+<hr>
+
+<h3>Profiilipilt</h3>
+<div class="card profile-image">
+    <div class="card-header">
+        <div class="image-box">
+            {{#each picId}}
+                <img src="" id="pfp" data-src="{{this}}" height="200" width="200">
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="card-content">
+        <form method="post" enctype="multipart/form-data" action="/profiil/upload">
+            <input class="choose-file" id="avatar" type="file" name="avatar">
+            <br>
+            <button type="submit">Lisa profiilipilt</button>
+        </form>
+
+        <form method="post" action="/profiil/remove">
+            <button type="submit">Eemalda profiilipilt</button>
+        </form>
+    </div>
 </div>
