@@ -335,3 +335,9 @@ a.google:hover {
     border: 1px solid #12914a;
     width: 20em !important;
 }
+
+/* STATISTICS */
+#hoursChart {
+    height: 20em;
+    width: 100%;
+}

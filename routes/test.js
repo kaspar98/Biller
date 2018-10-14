@@ -5,7 +5,7 @@ const script = "../scripts/test.js";
 
 router.get('/', function(req, res, next) {
     res.render('test', {
-        script: script
+        script: [script]
     });
 });
 

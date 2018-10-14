@@ -91,6 +91,15 @@ function changePaymentStatus(id, status, cb){
     pool.query(sql, cb);
 }
 
+function addStatistics(landingPage, landingTime, landingDate, browser, os, cb) {
+    var sql = "CALL sp_addStatistics('"+landingPage+"', '"+landingTime+"', '"+landingDate+"', '"+browser+"', '"+os+"')";
+    pool.query(sql, cb);
+}
+
+function getStatistics(cb){
+    pool.query("SELECT * FROM v_statistics", cb);
+}
+
 
 function init () {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
@@ -120,5 +129,7 @@ module.exports = {
     changePaymentStatus,
     getUserByGoogleID,
     getPayments,
-    countFriends
+    countFriends,
+    addStatistics,
+    getStatistics
 };

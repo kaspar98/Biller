@@ -21,7 +21,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
                 keywords: "Biller, profiil, sõbrad, sõbrakutsed",
                 friendRequests: results,
                 totalFriends: results1[0]["COUNT(*)"],
-                script: script,
+                script: [script],
                 picId: picId
             });
         });

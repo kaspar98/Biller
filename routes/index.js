@@ -48,7 +48,7 @@ router.get('/', function (req, res) {
                     myEvents: myEvents,
                     otherEventsConfirmed: otherEventsConfirmed,
                     otherEventsUnconfirmed: otherEventsUnconfirmed,
-                    script: script
+                    script: [script]
                 });
             })
         });

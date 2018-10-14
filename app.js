@@ -7,6 +7,10 @@ const bodyParser = require("body-parser");
 const env = require('dotenv').config();
 const session = require('express-session');
 const passport = require('passport');
+var http = require('http');
+const https = require("https");
+const fs = require("fs");
+const browser = require('browser-detect');
 const db = require("./db/mysql");
 const app = express();
 
@@ -23,6 +27,7 @@ const signUpRouter = require('./routes/signup');
 const logoutRouter = require('./routes/logout');
 const addRouter = require('./routes/add');
 const testRouter = require('./routes/test');
+const statsRouter = require('./routes/statistics');
 
 // Handlebars Middleware
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -42,8 +47,34 @@ app.use(fileUpload());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
+
+
+// Statistika kogumine sessiooni käivitamisel
+app.use(function (req, res, next) {
+    if (!req.session.begin) {
+        req.session.begin = true;
+        var currentdate = new Date();
+        var date = currentdate.getFullYear() + "/"
+            + (currentdate.getMonth()+1)  + "/"
+            + currentdate.getDate();
+        var time = currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+        var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        var currentBrowser = browser(req.headers['user-agent']);
+        var clientBrowser = currentBrowser["name"];
+        var os = currentBrowser["os"];
+
+        db.addStatistics(fullUrl, time, date, clientBrowser, os, (err, result) => {
+            if (err) throw err;
+            next()
+        });
+    } else{
+        next();
+    }
+});
 
 // Passport middleware
 app.use(passport.initialize());
@@ -69,9 +100,21 @@ app.use('/signup', signUpRouter);
 app.use('/logout', logoutRouter);
 app.use('/add', addRouter);
 app.use('/test', testRouter);
+app.use('/statistics', statsRouter);
 
 db.init();
 
+// const options = {
+//     key: fs.readFileSync('./config/certificates/client-key.pem'),
+//     cert: fs.readFileSync('./config/certificates/client-cert.pem'),
+//     passphrase: process.env.PASSPHRASE,
+// };
+
+http.createServer(app).listen(port);
+
+// https.createServer(options, app).listen(443);
+
+/*
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
-});
+});*/
