@@ -107,25 +107,26 @@
     {{/each}}
 
 {{else}}
-    <h1><span itemprop="name">Biller</span> - rahaasjad korda vms!</h1>
-    <p itemscope="description">
-        Biller on veebileht, kus saad mugavalt järge pidada, kui palju oled oma sõpradele laenanud ja neilt endilt laenu
-        võtnud.
-    </p>
-    <div itemprop="team"><strong>Billeri loojad:</strong>
+    <div itemscope itemtype="http://schema.org/WebSite">
+        <h1><span itemprop="name">Biller</span> - rahaasjad korda vms!</h1>
+        <p itemprop="description">
+            Biller on veebileht, kus saad mugavalt järge pidada, kui palju oled oma sõpradele laenanud ja neilt endilt laenu
+            võtnud.
+        </p>
+    </div>
+    <strong>Billeri loojad:</strong>
         <table>
-            <tr itemprop="person">
+            <tr itemscope itemtype="http://schema.org/Person">
                 <td itemprop="name">Kaspar Valk</td>
-                <td itemprop="job">Front- ja back-end</td>
+                <td itemprop="jobTitle">Front- ja back-end</td>
             </tr>
-            <tr itemprop="person">
+            <tr itemscope itemtype="http://schema.org/Person">
                 <td itemprop="name">Erik Martin Vetemaa</td>
-                <td itemprop="job">Front- ja back-end</td>
+                <td itemprop="jobTitle">Front- ja back-end</td>
             </tr>
-            <tr itemprop="person">
+            <tr itemscope itemtype="http://schema.org/Person">
                 <td itemprop="name">Oliver Vainumäe</td>
-                <td itemprop="job">Front- ja back-end</td>
+                <td itemprop="jobTitle">Front- ja back-end</td>
             </tr>
         </table>
-    </div>
 {{/if}}
