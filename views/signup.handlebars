@@ -3,28 +3,28 @@
         <h3>Registreeru</h3>
         <form action="/signup" method="post">
             <div class="form-group">
-                <label>Eesnimi</label>
-                <input type="text" class="form-control" name="firstName" value="{{firstName}}" required>
+                <label for="firstname">Eesnimi</label>
+                <input id="firstname" type="text" class="form-control" name="firstName" value="{{firstName}}" required>
             </div>
             <div class="form-group">
-                <label>Perekonnanimi</label>
-                <input type="text" class="form-control" name="lastName" value="{{lastName}}" required>
+                <label for="lastname">Perekonnanimi</label>
+                <input id="lastname" type="text" class="form-control" name="lastName" value="{{lastName}}" required>
             </div>
             <div class="form-group">
-                <label>Kasutajanimi</label>
-                <input type="text" class="form-control" name="username" value="{{username}}" required>
+                <label for="username">Kasutajanimi</label>
+                <input id="username" type="text" class="form-control" name="username" value="{{username}}" required>
             </div>
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" value="{{email}}" required>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" class="form-control" value="{{email}}" required>
             </div>
             <div class="form-group">
-                <label>Parool</label>
-                <input type="password" name="password" class="form-control" value="{{password}}" required>
+                <label for="pass">Parool</label>
+                <input id="pass" type="password" name="password" class="form-control" value="{{password}}" required>
             </div>
             <div class="form-group">
-                <label>Parool uuesti</label>
-                <input type="password" name="password2" class="form-control" value="{{password2}}" required>
+                <label for="repass">Parool uuesti</label>
+                <input id="repass" type="password" name="password2" class="form-control" value="{{password2}}" required>
             </div>
             <button type="submit">Kinnita</button>
         </form>

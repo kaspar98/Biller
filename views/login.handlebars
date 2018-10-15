@@ -4,12 +4,12 @@
         <h3>Kasutajatunnuse ja parooliga:</h3>
         <form method="post" action="/login">
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" class="form-control" required>
             </div>
             <div class="form-group">
-                <label>Parool</label>
-                <input type="password" name="password" class="form-control" required>
+                <label for="pass">Parool</label>
+                <input id="pass" type="password" name="password" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Logi sisse</button>
         </form>

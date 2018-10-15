@@ -412,3 +412,7 @@ a.google:hover {
         gap: 0;
     }
 }
+
+.peida {
+    display: none;
+}

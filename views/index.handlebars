@@ -4,12 +4,12 @@
             <h3>Lisa uus sündmus</h3>
             <form id="addEventForm" method="post" action="/addevent">
                 <div class="form-group">
-                    <label>Sündmuse nimi</label>
-                    <input type="text" name="title" class="form-control" required>
+                    <label for="eventname">Sündmuse nimi</label>
+                    <input id="eventname" type="text" name="title" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Sündmuse kirjeldus</label>
-                    <textarea class="form-control" name="eventDescription" required></textarea>
+                    <label for="eventdesc">Sündmuse kirjeldus</label>
+                    <textarea id="eventdesc" class="form-control" name="eventDescription" required></textarea>
                 </div>
                 <button type="submit">Lisa sündmus</button>
             </form>
@@ -69,12 +69,12 @@
                         <h4>Lisa võlgnikke:</h4>
                         <div class="new-lender">
                             <div class="form-group">
-                                <label>Võlgniku kasutajanimi</label>
-                                <input type="text" name="friendName" class="form-control" required>
+                                <label for="debtor">Võlgniku kasutajanimi</label>
+                                <input id="debtor" type="text" name="friendName" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Summa</label>
-                                <input type="text" name="friendPayAmount" class="form-control" required>
+                                <label for="amount">Summa</label>
+                                <input id="amount" type="text" name="friendPayAmount" class="form-control" required>
                             </div>
 
                         </div>

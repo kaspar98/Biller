@@ -31,7 +31,8 @@
             <div class="navbar-right">
                 {{#if user}}
                     <form itemprop="search" method="post" action="/add" class="search">
-                        <input type="search" placeholder="Sõbra nimi" name="findName">
+                        <label class="peida" for="search">Otsi</label>
+                        <input id="search" type="search" placeholder="Sõbra nimi" name="findName">
                         <button class="search-button" type="submit" alt="otsi sõpra">Otsi</button>
                     </form>
                     <a rel="nofollow" class="navbar-button" href="/logout" alt="logi välja">Logi
