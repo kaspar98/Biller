@@ -104,15 +104,17 @@ app.use('/statistics', statsRouter);
 
 db.init();
 
-// const options = {
-//     key: fs.readFileSync('./config/certificates/client-key.pem'),
-//     cert: fs.readFileSync('./config/certificates/client-cert.pem'),
-//     passphrase: process.env.PASSPHRASE,
-// };
+const options = {
+ key: fs.readFileSync('./config/certificates/client-key.pem'),
+ cert: fs.readFileSync('./config/certificates/client-cert.pem'),
+ passphrase: process.env.PASSPHRASE,
+};
 
-http.createServer(app).listen(port);
 
-// https.createServer(options, app).listen(443);
+// http.createServer(app).listen(port);
+
+
+https.createServer(options, app).listen(port);
 
 /*
 app.listen(port, () => {
