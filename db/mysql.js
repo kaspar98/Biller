@@ -30,11 +30,11 @@ function getUserByEmail(email, cb) {
     pool.query("SELECT * FROM v_users WHERE email=?", email, cb);
 }
 
-function getUserByName(firstName, lastName, uid, cb) {
+/*function getUserByName(firstName, lastName, uid, cb) {
     // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
     pool.query("SELECT firstName, lastName, v_users.id, username FROM v_users WHERE firstName='" + firstName + "' AND lastName='" + lastName + "' AND NOT EXISTS (SELECT * FROM v_friends " +
         "WHERE (id1=v_users.id AND id2='" + uid + "') OR (id1='" + uid + "' AND id2=v_users.id))", cb);
-}
+}*/
 
 function getUserByGoogleID(googleID, cb) {
     pool.query("SELECT * FROM v_users WHERE googleID=?", googleID, cb);
