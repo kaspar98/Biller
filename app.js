@@ -111,11 +111,10 @@ const options = {
 };
 
 
-// http.createServer(app).listen(port);
+http.createServer(app).listen(port);
 
 
-https.createServer(options, app).listen(port);
-
+// https.createServer(options, app).listen(port);
 /*
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
