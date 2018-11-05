@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
     if (req.isAuthenticated()) {
         // Leiame kõik sündmused, mis sisaldavad juba võlgnikke
         db.getEvents(req.user[0]["id"], (err, results) => {
-            if (err) throw err;
+            if (err) console.log(err);
             for (i = 0; i < results.length; i++) {
                 if (results[i]["creatorId"] == req.user[0]["id"]) {
                     if (!myEvents[results[i]["eventId"]]) {
@@ -35,7 +35,7 @@ router.get('/', function (req, res) {
 
             // Leiame ka need sündmused, mis ei sisalda veel võlgnikke
             db.getEmptyEvents(req.user[0]["id"], (err, results1) => {
-                if (err) throw err;
+                if (err) console.log(err);
                 for (i = 0; i < results1.length; i++) {
                     myEvents[results1[i]["eventId"]] = [];
                     myEvents[results1[i]["eventId"]].push(results1[i]);
@@ -110,7 +110,7 @@ router.post('/addpayer', ensureAuthenticated, (req, res) => {
 
 router.post('/confirm', ensureAuthenticated, (req, res) => {
     db.changePaymentStatus(req.body.confirmPayment, 1, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         req.flash("success_msg", "Makse kinnitatud!");
         res.redirect("/");
     })
@@ -118,7 +118,7 @@ router.post('/confirm', ensureAuthenticated, (req, res) => {
 
 router.post('/decline', ensureAuthenticated, (req, res) => {
     db.changePaymentStatus(req.body.declinePayment, 2, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         req.flash("success_msg", "Maksest keeldutud!");
         res.redirect("/");
     })

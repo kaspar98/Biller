@@ -16,7 +16,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
     let last = jupid[jupid.length - 1];
     let first = jupid.join(" ").replace(" " + last, "");
     db.getUserByName(first, last, req.user[0]["id"], (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         for (i = 0; i < results.length; i++) {
             if (results[i]["id"] == req.user[0]["id"]) {
                 results.splice(i, 1);
@@ -38,7 +38,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 router.post('/added', ensureAuthenticated, (req, res) => {
     db.addFriend(req.user[0]["id"], req.body.addFriend, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         req.flash("success_msg", "Sõbrakutse saadetud!");
         res.redirect("/");
     });

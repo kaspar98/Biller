@@ -8,9 +8,9 @@ const script = "../scripts/profiil.js";
 
 router.get('/', ensureAuthenticated, function (req, res, next) {
     db.getFriendRequests(req.user[0]["id"], (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         db.countFriends(req.user[0]["id"], (err1, results1) => {
-            if (err1) throw err;
+            if (err) console.log(err);
             var picId = "";
             if (fs.existsSync(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'))) {
                 picId = [req.user[0]["id"]]
@@ -30,7 +30,7 @@ router.get('/', ensureAuthenticated, function (req, res, next) {
 
 router.get('/allfriends', ensureAuthenticated, function (req, res, next) {
     db.getFriends(req.user[0]["id"], (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         res.json({friends: results, msg: "Sõbrad leitud!", status: 200});
     });
 });
@@ -38,7 +38,7 @@ router.get('/allfriends', ensureAuthenticated, function (req, res, next) {
 
 router.post('/accept', ensureAuthenticated, (req, res) => {
     db.changeFriendRequestStatus(req.user[0]["id"], req.body.acceptRequest, 1, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         req.flash("success_msg", "Sõbrakutse vastu võetud!");
         res.redirect("/profiil");
     });
@@ -46,7 +46,7 @@ router.post('/accept', ensureAuthenticated, (req, res) => {
 
 router.post('/decline', ensureAuthenticated, (req, res) => {
     db.changeFriendRequestStatus(req.user[0]["id"], req.body.declineRequest, 2, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         req.flash("success_msg", "Sõbrakutsest keeldutud!");
         res.redirect("/profiil");
     });
@@ -63,7 +63,7 @@ router.post("/upload", ensureAuthenticated, (req, res) => {
             res.redirect("/profiil");
         } else {
             file.mv(path.join(__dirname, '../public/img/' + req.user[0]["id"] + '.png'), function (err) {
-                if (err) throw err;
+                if (err) console.log(err);
                 req.flash("success_msg", "Pilt laetud!");
                 res.redirect("/profiil");
             });

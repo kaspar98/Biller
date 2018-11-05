@@ -43,14 +43,14 @@ router.post('/', (req, res) => {
     }
  // Email check
     db.getUserByEmail(req.body.email, (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         if (results.length) {
             errors.push({text: "See email on juba võetud"});
             reRender();
         } else {
             // Username taken check
             db.getUserByUsername(req.body.username, (err1, results1) => {
-                if (err1) throw err1;
+                if (err1) console.log(err1);
                 if (results1.length) {
                     errors.push({text: "See kasutajanimi on juba võetud"});
                     reRender();
@@ -62,9 +62,9 @@ router.post('/', (req, res) => {
                     } else {
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(req.body.password, salt, (err, hash) => {
-                                if (err) throw err;
+                                if (err) console.log(err);
                                 db.addUser(req.body.firstName, req.body.lastName, req.body.email, req.body.username, hash, "", (err, results) => {
-                                    if (err) throw err;
+                                    if (err) console.log(err);
                                 });
                             })
                         });

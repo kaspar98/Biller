@@ -5,7 +5,7 @@ const{ensureAuthenticated} = require("../helpers/auth");
 
 router.get('/', ensureAuthenticated, function(req, res, next) {
     db.getPayments(req.user[0]["id"], (err, results) => {
-        if (err) throw err;
+        if (err) console.log(err);
         var balances = {};
         for (i = 0; i < results.length; i++) {
             if(balances[results[i].username] == null){
