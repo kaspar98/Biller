@@ -117,7 +117,7 @@ module.exports = {
     getUserByUsername,
     getUserByEmail,
     init,
-    getUserByName,
+    //getUserByName,
     addFriend,
     getFriends,
     getFriendRequests,
