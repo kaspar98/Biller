@@ -82,4 +82,13 @@ router.post("/remove", ensureAuthenticated, (req, res) => {
     }
 });
 
+router.post('/delete', ensureAuthenticated, (req, res) => {
+    db.deleteAccount(req.user[0]["id"], (err, results) => {
+        if (err) console.log(err);
+        req.logout();
+        req.flash("success_msg", "Kasutaja kustutatud!");
+        res.redirect("/");
+    });
+});
+
 module.exports = router;

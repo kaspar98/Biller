@@ -49,17 +49,17 @@ CREATE TABLE Statistics (
 	PRIMARY KEY (id)
 );
 
-ALTER TABLE Payments ADD CONSTRAINT Payments_fk_userIdFrom FOREIGN KEY (idFrom) REFERENCES Users(id);
+ALTER TABLE Payments ADD CONSTRAINT Payments_fk_userIdFrom FOREIGN KEY (idFrom) REFERENCES Users(id) ON DELETE CASCADE;
 
-ALTER TABLE Payments ADD CONSTRAINT Payments_fk_userIdTo FOREIGN KEY (idTo) REFERENCES Users(id);
+ALTER TABLE Payments ADD CONSTRAINT Payments_fk_userIdTo FOREIGN KEY (idTo) REFERENCES Users(id) ON DELETE CASCADE;
 
-ALTER TABLE Payments ADD CONSTRAINT Payments_fk_eventId FOREIGN KEY (eventId) REFERENCES Events(id);
+ALTER TABLE Payments ADD CONSTRAINT Payments_fk_eventId FOREIGN KEY (eventId) REFERENCES Events(id) ON DELETE CASCADE;
 
-ALTER TABLE Friends ADD CONSTRAINT Friends_fk_userId1 FOREIGN KEY (id1) REFERENCES Users(id);
+ALTER TABLE Friends ADD CONSTRAINT Friends_fk_userId1 FOREIGN KEY (id1) REFERENCES Users(id) ON DELETE CASCADE;
 
-ALTER TABLE Friends ADD CONSTRAINT Friends_fk_userId2 FOREIGN KEY (id2) REFERENCES Users(id);
+ALTER TABLE Friends ADD CONSTRAINT Friends_fk_userId2 FOREIGN KEY (id2) REFERENCES Users(id) ON DELETE CASCADE;
 
-ALTER TABLE Events ADD CONSTRAINT Events_fk_creatorId FOREIGN KEY (creatorId) REFERENCES Users(id);
+ALTER TABLE Events ADD CONSTRAINT Events_fk_creatorId FOREIGN KEY (creatorId) REFERENCES Users(id) ON DELETE CASCADE;
 
 
 CREATE PROCEDURE sp_new_user(IN a_firstName varchar(255), IN a_lastName varchar(255), IN a_email varchar(255),
@@ -68,6 +68,11 @@ CREATE PROCEDURE sp_new_user(IN a_firstName varchar(255), IN a_lastName varchar(
     INSERT INTO Users(firstName, lastName, username, password, email, googleID)
         VALUES (a_firstName, a_lastName, a_username, a_password, a_email, a_googleID);
     SELECT * FROM Users WHERE googleID = a_googleID;
+    END;
+
+CREATE PROCEDURE sp_delete_user(IN uid INT(32))
+    BEGIN
+    DELETE FROM v_users WHERE id=uid;
     END;
 
 CREATE PROCEDURE sp_add_friend(IN uid INT(32), IN fid INT(32))

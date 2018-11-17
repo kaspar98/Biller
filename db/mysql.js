@@ -100,6 +100,10 @@ function getStatistics(cb) {
     pool.query("SELECT * FROM v_statistics", cb);
 }
 
+function deleteAccount(uid, cb) {
+    var sql = "CALL sp_delete_user('" + uid + "');";
+    pool.query(sql, cb);
+}
 
 function init() {
     data = fs.readFileSync(path.join(__dirname, '/init.sql'), 'utf8');
@@ -131,5 +135,6 @@ module.exports = {
     getPayments,
     countFriends,
     addStatistics,
-    getStatistics
+    getStatistics,
+    deleteAccount
 };
