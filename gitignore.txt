@@ -4,3 +4,4 @@ github-testid/
 mochawesome-report/
 chromedriver.exe
 geckodriver.exe
+.env

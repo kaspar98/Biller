@@ -1,7 +1,7 @@
 /**
  * -- COMMANDS --
  * RUN ALL TESTS: node node_modules/mocha/bin/mocha test
- * RUN WITH REPORTING: node node_modules/mocha/bin/mocha test --reporter mochawesome --reporter-options autoOpen=true
+ * RUN WITH REPORTING: node node_modules/mocha/bin/mocha test --reporter node_modules/mochawesome/dist/mochawesome --reporter-options autoOpen=true
  */
 
 var assert = require('assert'),
@@ -113,7 +113,7 @@ function prepTest(that) {
 }
 
 function createUser(username, email) {
-    driver.get("http://localhost:5000/");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com/");
     driver.findElement(By.xpath('//*[@id="signup"]')).click();
 
     driver.findElement(By.id('firstname')).sendKeys("Ees");
@@ -126,7 +126,7 @@ function createUser(username, email) {
 }
 
 function login(email) {
-    driver.get("http://localhost:5000/login");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com/login");
 
     driver.findElement(By.id('email')).sendKeys(email);
     driver.findElement(By.id('pass')).sendKeys("testpass");
@@ -134,25 +134,25 @@ function login(email) {
 }
 
 function deleteUser() {
-    driver.get("http://localhost:5000/profiil");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com/profiil");
     driver.wait(until.elementLocated(By.id('deleteAccount')), 5000);
     driver.findElement(By.id('deleteAccount')).click();
 }
 
 function addFriend(fullName) {
-    driver.get("http://localhost:5000");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com");
     driver.findElement(By.id('search')).sendKeys(fullName);
     driver.findElement(By.xpath('/html/body/nav/div/div/div[3]/form/button')).click();
     driver.findElement(By.xpath('/html/body/div/form/button')).click();
 }
 
 function acceptFriend() {
-    driver.get("http://localhost:5000/profiil");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com/profiil");
     driver.findElement(By.xpath('/html/body/div/div[1]/div/div[2]/form[1]/button')).click();
 }
 
 function newEvent(name, description) {
-    driver.get("http://localhost:5000");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com");
     driver.findElement(By.id('eventname')).sendKeys(name);
     driver.findElement(By.id('eventdesc')).sendKeys(description);
     driver.findElement(By.xpath('//*[@id="addEventForm"]/button')).click();
@@ -161,14 +161,14 @@ function newEvent(name, description) {
 }
 
 function addDebtor(debtor, amount) {
-    driver.get("http://localhost:5000");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com");
     driver.findElement(By.id('debtor')).sendKeys(debtor);
     driver.findElement(By.id('amount')).sendKeys(amount);
     driver.findElement(By.xpath('/html/body/div/div[2]/div[2]/div/form/button')).click();
 }
 
 function acceptEvent() {
-    driver.get("http://localhost:5000");
+    driver.get("https://cryptic-anchorage-52730.herokuapp.com");
     console.log(driver.findElement(By.xpath('/html/body/div/div[2]/div[2]/div/p')).getText());
     driver.findElement(By.xpath('/html/body/div/div[2]/div[2]/div/form[1]/button')).click();
 }
