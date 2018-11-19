@@ -12,13 +12,28 @@ const pool = mysql.createPool({
 });
 
 function addUser(firstName, lastName, email, username, password, googleID, cb) {
-    var sql = "CALL sp_new_user('" + firstName + "', '" + lastName + "', '" + email + "', '" +
-        username + "', '" + password + "', '" + googleID + "');";
+    var sql = "CALL sp_new_user("
+        + pool.escape(firstName) +
+        ", "
+        + pool.escape(lastName) +
+        ", "
+        + pool.escape(email) +
+        ", "
+        + pool.escape(username) +
+        ", "
+        + pool.escape(password) +
+        ", "
+        + pool.escape(googleID) + ");";
+
     pool.query(sql, cb);
 }
 
 function addFriend(uid, fid, cb) {
-    var sql = "CALL sp_add_friend('" + uid + "', '" + fid + "');";
+    var sql = "CALL sp_add_friend("
+        + pool.escape(uid) +
+        ", "
+        + pool.escape(fid) + ");";
+
     pool.query(sql, cb);
 }
 
@@ -32,8 +47,18 @@ function getUserByEmail(email, cb) {
 
 function getUserByName(firstName, lastName, uid, cb) {
     // Hetkel tagastab inimesi, kellel puudub kastuajaga sõprus
-    pool.query("SELECT firstName, lastName, v_users.id, username FROM v_users WHERE firstName='" + firstName + "' AND lastName='" + lastName + "' AND NOT EXISTS (SELECT * FROM v_friends " +
-        "WHERE (id1=v_users.id AND id2='" + uid + "') OR (id1='" + uid + "' AND id2=v_users.id))", cb);
+    var sql =
+        "SELECT firstName, lastName, v_users.id, username FROM v_users WHERE firstName="
+        + pool.escape(firstName) +
+        " AND lastName="
+        + pool.escape(lastName) +
+        " AND NOT EXISTS (SELECT * FROM v_friends WHERE (id1=v_users.id AND id2="
+        + pool.escape(uid) +
+        ") OR (id1="
+        + pool.escape(uid) +
+        " AND id2=v_users.id))";
+
+    pool.query(sql, cb);
 }
 
 function getUserByGoogleID(googleID, cb) {
@@ -45,8 +70,15 @@ function getFriendRequests(uid, cb) {
 }
 
 function getFriends(uid, cb) {
-    pool.query("SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE (id1='" + uid + "' OR id2='" + uid + "') " +
-        "AND confirmed=1 AND id<>'" + uid + "' AND (id1=id OR id2=id)", cb);
+    var sql = "SELECT firstName, lastName, username, id FROM v_friends, v_users WHERE (id1="
+        + pool.escape(uid) +
+        " OR id2="
+        + pool.escape(uid) +
+        ") AND confirmed=1 AND id<>"
+        + pool.escape(uid) +
+        " AND (id1=id OR id2=id)";
+
+    pool.query(sql, cb);
 }
 
 function changeFriendRequestStatus(uid, fid, status, cb) {
@@ -54,7 +86,13 @@ function changeFriendRequestStatus(uid, fid, status, cb) {
 }
 
 function addEvent(title, descriptionIn, creatorId, cb) {
-    var sql = "CALL sp_addEvent('" + title + "', '" + descriptionIn + "', '" + creatorId + "')";
+    var sql = "CALL sp_addEvent("
+        + pool.escape(title) +
+        ", "
+        + pool.escape(descriptionIn) +
+        ", "
+        + pool.escape(creatorId) + ")";
+
     pool.query(sql, cb);
 }
 
@@ -71,7 +109,15 @@ function getEmptyEvents(uid, cb) {
 }
 
 function addPayment(toid, fromusername, amountIn, eventid, cb) {
-    var sql = "CALL sp_addPayment('" + toid + "', '" + fromusername + "', '" + amountIn + "', '" + eventid + "')";
+    var sql = "CALL sp_addPayment("
+        + pool.escape(toid) +
+        ", "
+        + pool.escape(fromusername) +
+        ", "
+        + pool.escape(amountIn) +
+        ", "
+        + pool.escape(eventid) + ")";
+
     pool.query(sql, cb);
 }
 
