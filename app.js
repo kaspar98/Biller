@@ -13,7 +13,7 @@ const fs = require("fs");
 const browser = require('browser-detect');
 const db = require("./db/mysql");
 const app = express();
-/*const serveStatic = require("serve-static");*/
+const serveStatic = require("serve-static");
 
 const port = process.env.PORT || 5000;
 
@@ -36,8 +36,8 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // parse form data client
 
-/*// Static folder
-app.use(express.static(path.join(__dirname, "public")));*/
+// Static folder
+/*app.use(express.static(path.join(__dirname, "public")));*/
 
 // Fileupload
 app.use(fileUpload());
@@ -50,15 +50,23 @@ app.use(session({
 }));
 
 // Express static
-app.use(express.static(path.join(__dirname, "/public"), {
+app.use(express.static(path.join(__dirname, "public"), {
     maxAge: "1h"
 }));
 
+app.use((req, res, next) => {
+    res.header('Cache-Control', 'max-age=60000');
+    next();
+});
+
 // Serve static (backup)
-/*app.get(["/css/!*", "/scripts/!*"], express.static("public", {maxAge:3600000}));*/
+/*app.get(["/css/!*", "/scripts/!*"], express.static("public", {maxAge:60000}));*/
 
 /*app.use(serveStatic(path.join(__dirname, 'public'), {
-    maxAge: '1d',
+    maxAge: '1h'
+}));*/
+
+/*app.use(serveStatic(path.join(__dirname, "views"), {
     setHeaders: setCustomCacheControl
 }));*/
 
@@ -70,13 +78,11 @@ app.use(express.static(path.join(__dirname, "/public"), {
 app.use(serveStatic(path.join(__dirname, "public/scripts"), {
     maxAge: "1h",
     setHeaders: setCustomCacheControl
-}));*/
+}));
 
-/*function setCustomCacheControl(res, path) {
+function setCustomCacheControl(res, path) {
     if (serveStatic.mime.lookup(path) === 'text/html') {
-        res.setHeader('Cache-Control', 'public, max-age=0')
-    } else {
-        res.setHeader('Cache-Control', 'public, max-age=3600000')
+        res.setHeader('Cache-Control', 'public, max-age=60000')
     }
 }*/
 
