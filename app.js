@@ -12,6 +12,7 @@ const https = require("https");
 const fs = require("fs");
 const browser = require('browser-detect');
 const db = require("./db/mysql");
+const compression = require("compression");
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -34,6 +35,9 @@ app.set("view engine", "handlebars");
 // Bodyparser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // parse form data client
+
+// Compression
+app.use(compression());
 
 // Static folder (backup, nüüd tehakse seda Express staticus)
 /*app.use(express.static(path.join(__dirname, "public")));*/
