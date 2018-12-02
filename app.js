@@ -13,7 +13,7 @@ const fs = require("fs");
 const browser = require('browser-detect');
 const db = require("./db/mysql");
 const app = express();
-const serveStatic = require("serve-static");
+/*const serveStatic = require("serve-static");*/
 
 app.use(express.static(__dirname + '/public'));
 
@@ -51,13 +51,13 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-// Express static (backup)
-/*app.use(express.static(__dirname + "/public/!*", {
+// Express static
+app.use(express.static(__dirname + "/public/*", {
     maxAge: "1d"
-}));*/
+}));
 
-// Serve static
-app.get(["/css/*", "/scripts/*"], express.static("public", {maxAge:86400000}));
+// Serve static (backup)
+/*app.get(["/css/*", "/scripts/*"], express.static("public", {maxAge:86400000}));
 
 function setCustomCacheControl(res, path) {
     if (serveStatic.mime.lookup(path) === "text/html") {
@@ -73,7 +73,7 @@ app.use(serveStatic(path.join(__dirname, "/public/css/"), {
 app.use(serveStatic(path.join(__dirname, "/public/scripts/"), {
     maxAge: "1d",
     setHeaders: setCustomCacheControl
-}));
+}));*/
 
 
 // Statistika kogumine sessiooni käivitamisel
