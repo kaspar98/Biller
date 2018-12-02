@@ -13,6 +13,7 @@ const fs = require("fs");
 const browser = require('browser-detect');
 const db = require("./db/mysql");
 const app = express();
+/*const serveStatic = require("serve-static");*/
 
 app.use(express.static(__dirname + '/public'));
 
@@ -34,7 +35,7 @@ app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 // Bodyparser
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // parse form data client
 
 // Static folder
@@ -50,14 +51,39 @@ app.use(session({
     saveUninitialized: false,
 }));
 
+// Express static
+app.use(express.static(__dirname + "/public/*", {
+    maxAge: "1d"
+}));
+
+// Serve static (backup)
+/*app.get(["/css/!*", "/scripts/!*"], express.static("public", {maxAge:86400000}));
+
+function setCustomCacheControl(res, path) {
+    if (serveStatic.mime.lookup(path) === "text/html") {
+        res.setHeader("Cache-Control", "public, max-age=0")
+    }
+}
+
+app.use(serveStatic(path.join(__dirname, "/public/css/"), {
+    maxAge: "1d",
+    setHeaders: setCustomCacheControl
+}));
+
+app.use(serveStatic(path.join(__dirname, "/public/scripts/"), {
+    maxAge: "1d",
+    setHeaders: setCustomCacheControl
+}));*/
+
 
 // Statistika kogumine sessiooni käivitamisel
 app.use(function (req, res, next) {
     if (!req.session.begin) {
         req.session.begin = true;
+
         var currentdate = new Date();
         var date = currentdate.getFullYear() + "/"
-            + (currentdate.getMonth()+1)  + "/"
+            + (currentdate.getMonth() + 1) + "/"
             + currentdate.getDate();
         var time = currentdate.getHours() + ":"
             + currentdate.getMinutes() + ":"
@@ -71,7 +97,7 @@ app.use(function (req, res, next) {
             if (err) throw err;
             next()
         });
-    } else{
+    } else {
         next();
     }
 });
@@ -105,9 +131,9 @@ app.use('/statistics', statsRouter);
 db.init();
 
 const options = {
- key: fs.readFileSync('./config/certificates/client-key.pem'),
- cert: fs.readFileSync('./config/certificates/client-cert.pem'),
- passphrase: process.env.PASSPHRASE,
+    key: fs.readFileSync('./config/certificates/client-key.pem'),
+    cert: fs.readFileSync('./config/certificates/client-cert.pem'),
+    passphrase: process.env.PASSPHRASE,
 };
 
 
