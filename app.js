@@ -36,7 +36,7 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // parse form data client
 
-// Static folder
+// Static folder (backup, nüüd tehakse seda Express staticus)
 /*app.use(express.static(path.join(__dirname, "public")));*/
 
 // Fileupload
@@ -49,42 +49,16 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-// Express static
+// Express static (scriptid ja css)
 app.use(express.static(path.join(__dirname, "public"), {
     maxAge: "1h"
 }));
 
+// handlebarside cache'imine
 app.use((req, res, next) => {
     res.header('Cache-Control', 'max-age=60000');
     next();
 });
-
-// Serve static (backup)
-/*app.get(["/css/!*", "/scripts/!*"], express.static("public", {maxAge:60000}));*/
-
-/*app.use(serveStatic(path.join(__dirname, 'public'), {
-    maxAge: '1h'
-}));*/
-
-/*app.use(serveStatic(path.join(__dirname, "views"), {
-    setHeaders: setCustomCacheControl
-}));*/
-
-/*app.use(serveStatic(path.join(__dirname, "public/css"), {
-    maxAge: "1h",
-    setHeaders: setCustomCacheControl
-}));
-
-app.use(serveStatic(path.join(__dirname, "public/scripts"), {
-    maxAge: "1h",
-    setHeaders: setCustomCacheControl
-}));
-
-function setCustomCacheControl(res, path) {
-    if (serveStatic.mime.lookup(path) === 'text/html') {
-        res.setHeader('Cache-Control', 'public, max-age=60000')
-    }
-}*/
 
 
 // Statistika kogumine sessiooni käivitamisel
