@@ -15,8 +15,6 @@ const db = require("./db/mysql");
 const app = express();
 /*const serveStatic = require("serve-static");*/
 
-app.use(express.static(__dirname + '/public'));
-
 const port = process.env.PORT || 5000;
 
 // Load routers
@@ -38,8 +36,8 @@ app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json()); // parse form data client
 
-// Static folder
-app.use(express.static(path.join(__dirname, "public")));
+/*// Static folder
+app.use(express.static(path.join(__dirname, "public")));*/
 
 // Fileupload
 app.use(fileUpload());
@@ -52,28 +50,35 @@ app.use(session({
 }));
 
 // Express static
-app.use(express.static(__dirname + "/public/*", {
-    maxAge: "1d"
+app.use(express.static(path.join(__dirname, "/public"), {
+    maxAge: "1h"
 }));
 
 // Serve static (backup)
-/*app.get(["/css/*", "/scripts/*"], express.static("public", {maxAge:86400000}));
+/*app.get(["/css/!*", "/scripts/!*"], express.static("public", {maxAge:3600000}));*/
 
-function setCustomCacheControl(res, path) {
-    if (serveStatic.mime.lookup(path) === "text/html") {
-        res.setHeader("Cache-Control", "public, max-age=0")
-    }
-}
+/*app.use(serveStatic(path.join(__dirname, 'public'), {
+    maxAge: '1d',
+    setHeaders: setCustomCacheControl
+}));*/
 
-app.use(serveStatic(path.join(__dirname, "/public/css/"), {
-    maxAge: "1d",
+/*app.use(serveStatic(path.join(__dirname, "public/css"), {
+    maxAge: "1h",
     setHeaders: setCustomCacheControl
 }));
 
-app.use(serveStatic(path.join(__dirname, "/public/scripts/"), {
-    maxAge: "1d",
+app.use(serveStatic(path.join(__dirname, "public/scripts"), {
+    maxAge: "1h",
     setHeaders: setCustomCacheControl
 }));*/
+
+/*function setCustomCacheControl(res, path) {
+    if (serveStatic.mime.lookup(path) === 'text/html') {
+        res.setHeader('Cache-Control', 'public, max-age=0')
+    } else {
+        res.setHeader('Cache-Control', 'public, max-age=3600000')
+    }
+}*/
 
 
 // Statistika kogumine sessiooni käivitamisel
@@ -138,7 +143,6 @@ const options = {
 
 
 http.createServer(app).listen(port);
-
 
 // https.createServer(options, app).listen(port);
 /*
