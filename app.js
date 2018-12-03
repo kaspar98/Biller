@@ -58,10 +58,10 @@ app.use(express.static(path.join(__dirname, "public"), {
 }));
 
 // handlebarside cache'imine
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     res.header('Cache-Control', 'max-age=60000');
     next();
-});
+});*/
 
 
 // Statistika kogumine sessiooni käivitamisel
